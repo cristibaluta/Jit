@@ -1,0 +1,8 @@
+-neko run.n
+-main jsscramble.Run
+# -resource jsmin/test/is.js@is.js
+# -resource jsmin/test/is.min.1.js@is.min.1.js
+# -resource jsmin/test/is.min.2.js@is.min.2.js
+# -resource jsmin/test/is.min.3.js@is.min.3.js
+
+#-cmd neko run test
