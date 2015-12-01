@@ -30,9 +30,6 @@ class Jit {
 	}
 
 	static public function printUsage() {
-		Sys.println("Usage: 
-		jit <issue key> - returns the issue title from server
-		jit branch <issue key> - will create a branch with the name of the issue
-		jit checkout <issue key>");
+		Sys.println( haxe.Resource.getString("usage") );
 	}
 }

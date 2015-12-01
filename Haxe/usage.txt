@@ -1,0 +1,7 @@
+Jit 1.0 - (c)2015 Cristian Baluta
+Usage:
+  jit <issue id> - Returns the issue details from server
+  jit branch <issue id> - Will create a branch with the name of the issue after is formatted properly
+  jit checkout <issue id> - Will switch the branch to the provided issue if exists locally
+  jit commit [-log] <Commit message> - Will commit the changes of current branch to git. If -log is provided will log cu Jirassic the commit
+  jit <anything else> - Will redirect the command to git

@@ -1,5 +1,6 @@
 -neko jit.n
 -main jit.Jit
 -lib hxssl
+-resource usage.txt@usage
 
 -cmd neko jit.n IOS-609
