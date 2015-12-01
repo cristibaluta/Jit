@@ -11,17 +11,26 @@ class Git {
 	}
 
 	public function run() {
-		Sys.println("-----> Executing git commands");
 /*		var response = Sys.command("git", ["branch"]);*/
-		
 		
 		trace(getLocalBranches());
 	}
+
+	public function createBranchNamed(branchName: String) {
+		Sys.command("git", ["branch"]);
+	}
 	
-	function getLocalBranches() : Array<String> {
+	public function getLocalBranches() : Array<String> {
+		
 		var process = new sys.io.Process("git", ["branch"]);
 			process.exitCode();
 		var result = process.stdout.readAll().toString();
-		return result.split("\n");
+		var branches = new Array<String>();
+		for (branch in result.split("\n")) {
+			if (branch.length > 0) {
+				branches.push( StringTools.trim( branch ) );
+			}
+		}
+		return branches;
 	}
 }

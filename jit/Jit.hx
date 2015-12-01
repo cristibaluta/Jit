@@ -31,5 +31,7 @@ class Jit {
 
 	static public function printUsage() {
 		Sys.println( haxe.Resource.getString("usage") );
+		Sys.println( "You are connected to" );
+		Sys.println( haxe.Resource.getString("credentials") );
 	}
 }
