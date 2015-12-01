@@ -1,12 +1,10 @@
 package jit;
 
-
 class Jit {
 	
 	static public function main() {
 		
 		var args = Sys.args();
-		var commands = ["open", "branch", "checkout", "commit", "setup"];
 		
 		// Analize the arguments
 		if (args.length == 0) {
@@ -34,6 +32,7 @@ class Jit {
 				case "co":
 				
 				case "commit":
+				case "ci":
 				
 				case "setup":
 				
