@@ -13,5 +13,7 @@ class Git {
 	public function run() {
 		Sys.println("-----> Executing git commands");
 		var response = Sys.command("git", ["branch"]);
+		/*var process = sys.io.Process("git", ["branch"]);
+		Sys.println("-----> "+process);*/
 	}
 }
