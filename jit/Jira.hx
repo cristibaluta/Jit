@@ -1,5 +1,5 @@
 package jit;
-/*import jit.validator;*/
+/*import jit.validator.*;*/
 
 class Jira {
 	

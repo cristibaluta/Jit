@@ -12,8 +12,16 @@ class Git {
 
 	public function run() {
 		Sys.println("-----> Executing git commands");
-		var response = Sys.command("git", ["branch"]);
-		/*var process = sys.io.Process("git", ["branch"]);
-		Sys.println("-----> "+process);*/
+/*		var response = Sys.command("git", ["branch"]);*/
+		
+		
+		trace(getLocalBranches());
+	}
+	
+	function getLocalBranches() : Array<String> {
+		var process = new sys.io.Process("git", ["branch"]);
+			process.exitCode();
+		var result = process.stdout.readAll().toString();
+		return result.split("\n");
 	}
 }

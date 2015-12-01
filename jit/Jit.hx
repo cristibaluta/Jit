@@ -22,10 +22,10 @@ class Jit {
 	   			jira.run();
 	   	}
 		
-/*		var git = new Git(args);
+		var git = new Git(args);
 			git.run();
 
-		var jirassic = new Jirassic(args);
+		/*var jirassic = new Jirassic(args);
 			jirassic.run();*/
 	}
 
