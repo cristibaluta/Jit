@@ -30,12 +30,9 @@ class Jit {
 					} );
 					
 				case "checkout","co":
-					trace(args[1]);
 					var issueKey = new JiraIssueKeyValidator().validateIssueKey(args[1]);
-					trace(issueKey);
 					var git = new Git(args);
 					var gitBranchName = git.searchInLocalBranches( issueKey );
-					trace(gitBranchName);
 					if (gitBranchName != null) {
 						git.checkoutBranchNamed( gitBranchName );
 					} else {
@@ -45,6 +42,8 @@ class Jit {
 				case "commit","ci":
 				
 				case "setup":
+				
+				case "lunch":
 				
 			}
 
