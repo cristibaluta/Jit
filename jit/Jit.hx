@@ -1,4 +1,5 @@
 package jit;
+import jit.validator.*;
 
 class Jit {
 	
@@ -30,7 +31,15 @@ class Jit {
 					
 				case "checkout":
 				case "co":
-				
+					var issueKey = new JiraIssueKeyValidator().validateIssueKey(args[1]);
+					var git = new Git(args);
+					var gitBranchName = git.searchInLocalBranches( issueKey );
+					if (gitBranchName != null) {
+						git.checkoutBranchNamed( gitBranchName );
+					} else {
+						Sys.println( "Switched to branch: " + gitBranchName );
+					}
+					
 				case "commit":
 				case "ci":
 				

@@ -18,11 +18,16 @@ class Git {
 	public function createBranchNamed (branchName: String) {
 		Sys.command("git", ["branch", branchName]);
 	}
+
+	public function checkoutBranchNamed (branchName: String) {
+		Sys.command("git", ["checkout", branchName]);
+	}
 	
 	public function searchInLocalBranches (issueId: String) : String {
 		var branches = getLocalBranches();
 		for (branch in branches) {
-			if (branch.indexOf(issueId) != -1) {
+			trace(branch + " indexOf " + issueId);
+			if (branch.toLowerCase().indexOf(issueId.toLowerCase()) != -1) {
 				return branch;
 			}
 		}
