@@ -9,4 +9,8 @@ class JiraIssueKeyValidatorTestCase extends haxe.unit.TestCase {
 	public function testIssueWithDash() {
 		assertEquals(new JiraIssueKeyValidator().validateIssueKey("AA-56"), "AA-56");
 	}
+	
+	public function testIssueOnlyWithCharacters() {
+		assertEquals(new JiraIssueKeyValidator().validateIssueKey("AAbb"), "AAbb");
+	}
 }

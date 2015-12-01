@@ -13,10 +13,13 @@ class JiraIssueKeyValidator {
 		}
 		else {
 			var r = ~/[0-9]+/g;
-				r.match ( issueKey );
-			var issueNumber = r.matched(0);
-			var components = r.split ( issueKey );
-			return components[0] + "-" + issueNumber;
+			if (r.match ( issueKey )) {
+				var issueNumber = r.matched(0);
+				var components = r.split ( issueKey );
+				return components[0] + "-" + issueNumber;
+			} else {
+				return issueKey;
+			}
 		}
 	}
 }
