@@ -9,19 +9,27 @@ class Git {
 	public function new (args: Array<String>) {
 		this.args = args;
 	}
-
+	
 	public function run() {
 /*		var response = Sys.command("git", ["branch"]);*/
-		
-		trace(getLocalBranches());
+/*		trace(getLocalBranches());*/
 	}
 
-	public function createBranchNamed(branchName: String) {
-		Sys.command("git", ["branch"]);
+	public function createBranchNamed (branchName: String) {
+		Sys.command("git", ["branch", branchName]);
 	}
 	
-	public function getLocalBranches() : Array<String> {
-		
+	public function searchInLocalBranches (issueId: String) : String {
+		var branches = getLocalBranches();
+		for (branch in branches) {
+			if (branch.indexOf(issueId) != -1) {
+				return branch;
+			}
+		}
+		return null;
+	}
+	
+	function getLocalBranches() : Array<String> {
 		var process = new sys.io.Process("git", ["branch"]);
 			process.exitCode();
 		var result = process.stdout.readAll().toString();
