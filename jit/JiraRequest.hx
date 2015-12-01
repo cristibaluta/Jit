@@ -18,15 +18,14 @@ class JiraRequest {
 		r.addParameter ("fields", "key,summary");
 		r.onData = function (data: String) { 
 			var json = haxe.Json.parse(data);
-			trace(json);
+/*			trace(json);*/
 			completion(json);
 		}
 		r.onError = function (data: String) {
-			trace(data); 
 			trace(r);
 		}
 		r.onStatus = function(status) {
-			trace(status);
+			
 		}
 		r.request();
 	}

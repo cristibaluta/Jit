@@ -9,27 +9,26 @@ class Jira {
 		this.args = args;
 	}
 
-	public function run() {
+	public function displayIssueDetails() {
 		
 		var issueKey = new JiraIssueKeyValidator().validateIssueKey(args[0]);
-		trace(args[0] + " validated to "+issueKey);
 		var requestUser = new JiraRequest();
 		requestUser.getIssue (issueKey, function (response: Dynamic) {
-/*			Sys.println(response);*/
-			trace(response.key);
-			trace(response.fields.summary);
-			trace(response.key + "_" + issueSummaryToGitBranch(response.fields.summary));
+			Sys.println( response.key );
+			Sys.println( response.fields.summary );
+			Sys.println( response.key + "_" + issueSummaryToGitBranch(response.fields.summary));
 		});
 	}
 	
 	public function openIssue (issueKey: String) {
+		
 		issueKey = new JiraIssueKeyValidator().validateIssueKey(issueKey);
 		var requestUser = new JiraRequest();
 		requestUser.getIssue (issueKey, function (response: Dynamic) {
-			trace(response.self);
+			// Open the url
 			var credentials = haxe.Resource.getString("credentials").split("\n");
 			var baseUrl = credentials[0];
-			var issueUrl = baseUrl + "/jira/browse/";// + response.key;
+			var issueUrl = baseUrl + "/jira/browse/" + response.key;
 			Sys.command("osascript", ["-e", "tell application \"Safari\" to activate"]);
 			Sys.command("osascript", ["-e", "tell application \"Safari\" to open location \"" + issueUrl + "\""]);
 		});

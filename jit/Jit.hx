@@ -12,18 +12,22 @@ class Jit {
 		if (args.length == 0) {
 			printUsage();
 		}
+		else if (args.length == 1) {
+			var jira = new Jira(args);
+				jira.displayIssueDetails();
+		}
 		else {
 			
 			var jira = new Jira(args);
 			
 			switch (args[0]) {
-				case "open": 
+				case "open":
 					jira.openIssue( args[1] );
 					
-				case "branch": 
-					/*jira.openIssue( args[1] );
+				case "branch":
+					jira.openIssue( args[1] );
 					var git = new Git(args);
-						git.run();*/
+						git.run();
 /*					break;*/
 			}
 
