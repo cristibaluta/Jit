@@ -29,19 +29,20 @@ class Jit {
 						Sys.println( "New branch created: " + branchName );
 					} );
 					
-				case "checkout":
-				case "co":
+				case "checkout","co":
+					trace(args[1]);
 					var issueKey = new JiraIssueKeyValidator().validateIssueKey(args[1]);
+					trace(issueKey);
 					var git = new Git(args);
 					var gitBranchName = git.searchInLocalBranches( issueKey );
+					trace(gitBranchName);
 					if (gitBranchName != null) {
 						git.checkoutBranchNamed( gitBranchName );
 					} else {
-						Sys.println( "Switched to branch: " + gitBranchName );
+						Sys.println( "Can't switch to branch containing: " + args[1] );
 					}
 					
-				case "commit":
-				case "ci":
+				case "commit","ci":
 				
 				case "setup":
 				
