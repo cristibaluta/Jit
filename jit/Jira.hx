@@ -1,5 +1,5 @@
 package jit;
-/*import jit.validator;*/
+import jit.validator.*;
 
 class Jira {
 	
@@ -11,7 +11,7 @@ class Jira {
 
 	public function run() {
 		
-		var issueKey = new jit.validator.JiraIssueKeyValidator().validateIssueKey(args[0]);
+		var issueKey = new JiraIssueKeyValidator().validateIssueKey(args[0]);
 		trace(args[0] + " validated to "+issueKey);
 		var requestUser = new JiraRequest();
 		requestUser.getIssue (issueKey, function (response: Dynamic) {
@@ -22,11 +22,25 @@ class Jira {
 		});
 	}
 	
+	public function openIssue (issueKey: String) {
+		issueKey = new JiraIssueKeyValidator().validateIssueKey(issueKey);
+		var requestUser = new JiraRequest();
+		requestUser.getIssue (issueKey, function (response: Dynamic) {
+			trace(response.self);
+			var credentials = haxe.Resource.getString("credentials").split("\n");
+			var baseUrl = credentials[0];
+			var issueUrl = baseUrl + "/jira/browse/";// + response.key;
+			Sys.command("osascript", ["-e", "tell application \"Safari\" to activate"]);
+			Sys.command("osascript", ["-e", "tell application \"Safari\" to open location \"" + issueUrl + "\""]);
+		});
+	}
+	
 	function issueSummaryToGitBranch(string: String): String {
 		
 		string = (~/\[(\w+)\]/g).replace(string, "");
 		string = (~/[^a-zA-Z\d-]+/g).replace(string, "_");
 		string = (~/_-_/g).replace(string, "_");
+		string = (~/__/g).replace(string, "_");
 		
 	    return string;
 	}
