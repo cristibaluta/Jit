@@ -9,6 +9,15 @@ class Jira {
 		this.args = args;
 	}
 
+	public function getFormattedIssueForGit (completion: String->Void) {
+		
+		var issueKey = new JiraIssueKeyValidator().validateIssueKey(args[0]);
+		var requestUser = new JiraRequest();
+		requestUser.getIssue (issueKey, function (response: Dynamic) {
+			completion (response.key + "_" + issueSummaryToGitBranch(response.fields.summary));
+		});
+	}
+	
 	public function displayIssueDetails() {
 		
 		var issueKey = new JiraIssueKeyValidator().validateIssueKey(args[0]);
@@ -34,7 +43,7 @@ class Jira {
 		});
 	}
 	
-	function issueSummaryToGitBranch(string: String): String {
+	function issueSummaryToGitBranch (string: String) : String {
 		
 		string = (~/\[(\w+)\]/g).replace(string, "");
 		string = (~/[^a-zA-Z\d-]+/g).replace(string, "_");

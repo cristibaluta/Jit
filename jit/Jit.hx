@@ -17,18 +17,26 @@ class Jit {
 				jira.displayIssueDetails();
 		}
 		else {
-			
-			var jira = new Jira(args);
-			
 			switch (args[0]) {
 				case "open":
+					var jira = new Jira(args);
 					jira.openIssue( args[1] );
 					
 				case "branch":
-					jira.openIssue( args[1] );
-					var git = new Git(args);
-						git.run();
-/*					break;*/
+					var jira = new Jira([args[1]]);
+					jira.getFormattedIssueForGit( function (branchName: String) {
+						var git = new Git(args);
+							git.createBranchNamed( branchName );
+						Sys.println( "New branch created: " + branchName );
+					} );
+					
+				case "checkout":
+				case "co":
+				
+				case "commit":
+				
+				case "setup":
+				
 			}
 
 				/*var jirassic = new Jirassic(args);
