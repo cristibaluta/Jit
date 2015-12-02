@@ -34,7 +34,7 @@ class JiraRequest {
 		var credentials = haxe.Resource.getString("credentials").split("\n");
 		var baseUrl = credentials[0];
 		var user = credentials[1];
-		var pass = credentials[2];
+		var pass = new OSXKeychain().getPasswordForUser(user);
 		var userPassword64 = haxe.crypto.Base64.encode( haxe.io.Bytes.ofString (user + ":" + pass) );
 		return userPassword64;
 	}
