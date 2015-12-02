@@ -6,6 +6,8 @@ class Jit {
 	static public function main() {
 		
 		var args = Sys.args();
+		new Config();
+		return;
 		
 		// Analize the arguments
 		if (args.length == 0) {

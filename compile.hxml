@@ -3,4 +3,11 @@
 -lib hxssl
 -resource usage.txt@usage
 
--cmd neko jit.n IOS-609
+--next
+-neko jit_tests.n
+-main JitTests
+-lib hxssl
+-resource usage.txt@usage
+
+-cmd neko jit_tests
+-cmd neko jit IOS609
