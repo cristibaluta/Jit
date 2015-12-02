@@ -40,15 +40,17 @@ class Jit {
 					}
 					
 				case "commit","ci":
-				
+					args.shift();
+					var git = new Git(args);
+						git.commit(args);
+					var jirassic = new Jirassic(args);
+						jirassic.logCommit("", args);
+						
 				case "setup":
 				
 				case "lunch":
 				
 			}
-
-				/*var jirassic = new Jirassic(args);
-					jirassic.run();*/
 		}
 	}
 

@@ -8,8 +8,13 @@ class Jirassic {
 		this.args = args;
 	}
 
-	public function run() {
-		Sys.println("-----> Executing Jirassic commands");
+	public function logCommit (issueId: String, comments: Array<String>) {
+		Sys.println("-----> Log commit to Jirassic");
+		// var response = Sys.command("osascript", ["-e", "tell application \"Safari\" to activate"]);
+	}
+	
+	public function logLunch (duration: String) {
+		Sys.println("-----> Log lunch to jirassic");
 		// var response = Sys.command("osascript", ["-e", "tell application \"Safari\" to activate"]);
 	}
 }

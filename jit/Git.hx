@@ -23,6 +23,11 @@ class Git {
 		Sys.command("git", ["checkout", branchName]);
 	}
 	
+	public function commit (comments: Array<String>) {
+		Sys.command("git", ["add", "."]);
+		Sys.command("git", ["commit", "-m", comments.join(" ")]);
+	}
+	
 	public function searchInLocalBranches (issueId: String) : String {
 		var branches = getLocalBranches();
 		for (branch in branches) {
