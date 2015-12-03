@@ -15,19 +15,53 @@ class Setup {
 	public function run () {
 		
 		Sys.println( "Enter the jira url. Current url is " + config.getJiraUrl() );
-		var jiraUrl = Sys.stdout();
-/*		var url = jiraUrl.readAll().toString();
-		setJiraUrl( url );*/
+		var jiraUrl = "";
+		var looping = true;
+		while (looping) {
+			var char = Sys.getChar(true);
+			if (char == 13) {
+				looping = false;
+			} else if (char != null) {
+				jiraUrl = jiraUrl + String.fromCharCode(char);
+			}
+		}
+		if (jiraUrl != "") {
+			setJiraUrl( jiraUrl );
+		}
 		
+		// Ask for username
 		Sys.println( "Enter your jira username: " );
-		var jiraUser = Sys.stdin();
-		var user = jiraUser.readAll().toString();
-		setJiraUser( user );
+		var user = "";
+		var looping = true;
+		while (looping) {
+			var char = Sys.getChar(true);
+			if (char == 13) {
+				looping = false;
+			} else if (char != null) {
+				user = user + String.fromCharCode(char);
+			}
+		}
+		if (user != "") {
+			setJiraUser( user );
+		}
 		
 		Sys.println( "Enter your jira password: " );
-		var jiraPass = Sys.stdin();
-		var pass = jiraPass.readAll().toString();
-		setJiraPasswordForUser( user, pass );
+		var pass = "";
+		var looping = true;
+		while (looping) {
+			var char = Sys.getChar(true);
+			if (char == 13) {
+				looping = false;
+			} else if (char != null) {
+				pass = pass + String.fromCharCode(char);
+			}
+		}
+		if (user == "") {
+			
+		}
+		if (pass != "") {
+			setJiraPasswordForUser( user, pass );
+		}
 		
 		Sys.println( "Great, we are done!" );
 	}
