@@ -8,8 +8,8 @@ class JiraRequest {
 	
 	public function getIssue (key: String, completion: Dynamic->Void) {
 		
-		var credentials = haxe.Resource.getString("credentials").split("\n");
-		var baseUrl = credentials[0];
+		var config = new Config();
+		var baseUrl = config.getJiraUrl();
 		var userPassword64 = encriptedCredentials();
 		
 		var r = new haxe.Http( baseUrl + "/jira/rest/api/2/issue/" + key );
@@ -31,9 +31,8 @@ class JiraRequest {
 	}
 	
 	function encriptedCredentials(): String {
-		var credentials = haxe.Resource.getString("credentials").split("\n");
-		var baseUrl = credentials[0];
-		var user = credentials[1];
+		var config = new Config();
+		var user = config.getJiraUser();
 		var pass = new OSXKeychain().getPasswordForUser(user);
 		var userPassword64 = haxe.crypto.Base64.encode( haxe.io.Bytes.ofString (user + ":" + pass) );
 		return userPassword64;

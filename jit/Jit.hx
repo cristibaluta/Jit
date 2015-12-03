@@ -6,16 +6,10 @@ class Jit {
 	static public function main() {
 		
 		var args = Sys.args();
-		new Config();
-		return;
 		
 		// Analize the arguments
 		if (args.length == 0) {
 			printUsage();
-		}
-		else if (args.length == 1) {
-			var jira = new Jira(args);
-				jira.displayIssueDetails();
 		}
 		else {
 			switch (args[0]) {
@@ -49,9 +43,14 @@ class Jit {
 						jirassic.logCommit("", args);
 						
 				case "setup":
-				
+				var setup = new Setup();
+					setup.run();
+					
 				case "lunch":
 				
+				default:
+					var jira = new Jira(args);
+						jira.displayIssueDetails();
 			}
 		}
 	}
