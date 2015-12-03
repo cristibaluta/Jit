@@ -35,8 +35,8 @@ class Jira {
 		var requestUser = new JiraRequest();
 		requestUser.getIssue (issueKey, function (response: Dynamic) {
 			// Open the url
-			var credentials = haxe.Resource.getString("credentials").split("\n");
-			var baseUrl = credentials[0];
+			var config = new Config();
+			var baseUrl = config.getJiraUrl();
 			var issueUrl = baseUrl + "/jira/browse/" + response.key;
 			Sys.command("osascript", ["-e", "tell application \"Safari\" to activate"]);
 			Sys.command("osascript", ["-e", "tell application \"Safari\" to open location \"" + issueUrl + "\""]);
