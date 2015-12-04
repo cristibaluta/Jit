@@ -1,8 +1,6 @@
 package jit;
 import haxe.io.Eof;
-import sys.io.File;
-import sys.io.FileInput;
-import sys.io.FileOutput;
+import sys.io.*;
 
 class Config {
 	
@@ -10,10 +8,9 @@ class Config {
 	
 	public function new() {
 		content = File.getContent( configPath() ).split("\n");
-		trace(content);
 	}
 	
-	public function getJiraUrl () : String {
+	public function getJiraUrl() : String {
 		return content[0];
 	}
 	
@@ -22,7 +19,7 @@ class Config {
 		save();
 	}
 	
-	public function getJiraUser(): String {
+	public function getJiraUser() : String {
 		return content[1];
 	}
 	
@@ -38,7 +35,7 @@ class Config {
 			fout.close();
 	}
 	
-	function configPath(): String {
+	function configPath() : String {
 		var homeDir = Sys.getEnv("HOME");
 		var configFile = homeDir + "/.jitconfig";
 		return configFile;

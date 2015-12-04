@@ -1,4 +1,4 @@
-package jit;
+package jit.security;
 
 interface Keychain {
 	public function setUserAndPassword (user: String, password: String) : Void;

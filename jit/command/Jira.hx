@@ -1,4 +1,4 @@
-package jit;
+package jit.command;
 import jit.validator.*;
 
 class Jira {

@@ -1,6 +1,7 @@
-package jit;
+package jit.command;
 import haxe.io.Eof;
 import sys.io.*;
+import jit.security.*;
 
 class Setup {
 	
@@ -26,7 +27,7 @@ class Setup {
 		
 		var pass = param("Jira password");
 		if (user == "") {
-			user = config.getJiraUser()
+			user = config.getJiraUser();
 		}
 		if (user != "" && user != null && pass != "") {
 			setJiraPasswordForUser( user, pass );

@@ -1,4 +1,5 @@
 package jit;
+import jit.security.*;
 
 class JiraRequest {
 	

@@ -1,5 +1,6 @@
 package jit;
 import jit.validator.*;
+import jit.command.*;
 
 class Jit {
 	

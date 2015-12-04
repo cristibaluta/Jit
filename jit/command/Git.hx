@@ -1,20 +1,13 @@
-package jit;
+package jit.command;
 
-// Git class should take the arguments received through the commandline and extract the git command
 class Git {
-
-	// inline static var GIT_COMMANDS = ["branch", "checkout"];
+	
 	var args: Array<String>;
 
 	public function new (args: Array<String>) {
 		this.args = args;
 	}
 	
-	public function run() {
-/*		var response = Sys.command("git", ["branch"]);*/
-/*		trace(getLocalBranches());*/
-	}
-
 	public function createBranchNamed (branchName: String) {
 		Sys.command("git", ["branch", branchName]);
 	}
