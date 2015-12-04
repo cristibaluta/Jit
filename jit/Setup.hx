@@ -1,8 +1,6 @@
 package jit;
 import haxe.io.Eof;
-import sys.io.File;
-import sys.io.FileInput;
-import sys.io.FileOutput;
+import sys.io.*;
 
 class Setup {
 	
@@ -14,48 +12,19 @@ class Setup {
 	
 	public function run () {
 		
-		Sys.println( "Enter the jira url. Current url is " + config.getJiraUrl() );
-		var jiraUrl = "";
-		var looping = true;
-		while (looping) {
-			var char = Sys.getChar(true);
-			if (char == 13) {
-				looping = false;
-			} else if (char != null) {
-				jiraUrl = jiraUrl + String.fromCharCode(char);
-			}
-		}
+		Sys.println( "Jira url. Current url is " + config.getJiraUrl() );
+		var jiraUrl = param("Jira url");
 		if (jiraUrl != "") {
 			setJiraUrl( jiraUrl );
 		}
 		
 		// Ask for username
-		Sys.println( "Enter your jira username: " );
-		var user = "";
-		var looping = true;
-		while (looping) {
-			var char = Sys.getChar(true);
-			if (char == 13) {
-				looping = false;
-			} else if (char != null) {
-				user = user + String.fromCharCode(char);
-			}
-		}
+		var user = param("Jira username");
 		if (user != "") {
 			setJiraUser( user );
 		}
 		
-		Sys.println( "Enter your jira password: " );
-		var pass = "";
-		var looping = true;
-		while (looping) {
-			var char = Sys.getChar(true);
-			if (char == 13) {
-				looping = false;
-			} else if (char != null) {
-				pass = pass + String.fromCharCode(char);
-			}
-		}
+		var pass = param("Jira password");
 		if (user == "") {
 			
 		}
@@ -78,5 +47,20 @@ class Setup {
 	function setJiraPasswordForUser (user: String, pass: String) {
 		var keychain = new OSXKeychain();
 		keychain.setUserAndPassword (user, pass);
+	}
+	
+	function param( name, ?passwd ) {
+		Sys.print(name + " : ");
+		if( passwd ) {
+			var s = new StringBuf();
+			do switch Sys.getChar(false) {
+				case 10, 13: break;
+				case c: s.addChar(c);
+			}
+			while (true);
+			Sys.print("");
+			return s.toString();
+		}
+		return Sys.stdin().readLine();
 	}
 }

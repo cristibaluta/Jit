@@ -10,4 +10,4 @@
 -resource usage.txt@usage
 
 -cmd neko jit_tests
--cmd neko jit IOS609
+#-cmd neko jit setup
