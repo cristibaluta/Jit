@@ -19,9 +19,13 @@ class Jit {
 				case "branch":
 					var jira = new Jira([args[1]]);
 					jira.getFormattedIssueForGit( function (branchName: String) {
-						var git = new Git(args);
-							git.createBranchNamed( branchName );
-						Sys.println( "New branch created: " + branchName );
+						if (branchName != null) {
+							var git = new Git(args);
+								git.createBranchNamed( branchName );
+							Sys.println( "New branch created: " + branchName );
+						} else {
+							Sys.println( "Server error" );
+						}
 					} );
 					
 				case "checkout","co":

@@ -14,7 +14,11 @@ class Jira {
 		var issueKey = new JiraIssueKeyValidator().validateIssueKey(args[0]);
 		var requestUser = new JiraRequest();
 		requestUser.getIssue (issueKey, function (response: Dynamic) {
-			completion (response.key + "_" + issueSummaryToGitBranch(response.fields.summary));
+			if (response != null) {
+				completion (response.key + "_" + issueSummaryToGitBranch(response.fields.summary));
+			} else {
+				completion (null);
+			}
 		});
 	}
 	
