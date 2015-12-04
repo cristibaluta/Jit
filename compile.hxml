@@ -1,12 +1,10 @@
 -neko jit.n
 -main jit.Jit
--lib hxssl
 -resource usage.txt@usage
 
 --next
 -neko jit_tests.n
 -main JitTests
--lib hxssl
 -resource usage.txt@usage
 
 -cmd neko jit_tests
