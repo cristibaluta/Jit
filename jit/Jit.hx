@@ -8,11 +8,9 @@ class Jit {
 		
 		var args = Sys.args();
 		
-		// Analize the arguments
 		if (args.length == 0) {
 			printUsage();
-		}
-		else {
+		} else {
 			switch (args[0]) {
 				case "open":
 					var jira = new Jira(args);
@@ -33,7 +31,7 @@ class Jit {
 					if (gitBranchName != null) {
 						git.checkoutBranchNamed( gitBranchName );
 					} else {
-						Sys.println( "Can't switch to branch containing: " + args[1] );
+						Sys.println( "Can't find a local branch containing: " + args[1] );
 					}
 					
 				case "commit","ci":

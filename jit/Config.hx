@@ -7,7 +7,12 @@ class Config {
 	private var content: Array<String>;
 	
 	public function new() {
-		content = File.getContent( configPath() ).split("\n");
+		var path = configPath();
+		if (!sys.FileSystem.exists(path)) {
+			var fout = File.write( configPath(), false );
+				fout.close();
+		}
+		content = File.getContent( path ).split("\n");
 	}
 	
 	public function getJiraUrl() : String {
