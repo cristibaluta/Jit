@@ -26,9 +26,9 @@ class Setup {
 		
 		var pass = param("Jira password");
 		if (user == "") {
-			
+			user = config.getJiraUser()
 		}
-		if (pass != "") {
+		if (user != "" && user != null && pass != "") {
 			setJiraPasswordForUser( user, pass );
 		}
 		
@@ -36,7 +36,6 @@ class Setup {
 	}
 	
 	public function setJiraUrl (url: String) {
-		trace(url);
 		config.setJiraUrl ( url );
 	}
 	
