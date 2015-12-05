@@ -45,7 +45,7 @@ class Setup {
 	}
 	
 	function setJiraPasswordForUser (user: String, pass: String) {
-		var keychain = new OSXKeychain();
+		var keychain = new Keychain();
 		keychain.setUserAndPassword (user, pass);
 	}
 	

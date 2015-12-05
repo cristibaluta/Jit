@@ -1,6 +1,21 @@
 package jit.security;
 
-interface Keychain {
-	public function setUserAndPassword (user: String, password: String) : Void;
-	public function getPasswordForUser (user: String) : String;
+class Keychain implements KeychainInterface {
+	
+	var keychain: KeychainInterface;
+	
+	public function new() {
+		switch (Sys.systemName()) {
+			case "Mac": keychain = new OSXKeychain();
+			default: keychain = new OSXKeychain();
+		}
+	}
+	
+	public function setUserAndPassword (user: String, password: String) : Void {
+		keychain.setUserAndPassword(user, password);
+	}
+	
+	public function getPasswordForUser (user: String) : String {
+		return getPasswordForUser(user);
+	}
 }

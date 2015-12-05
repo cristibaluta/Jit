@@ -91,9 +91,9 @@ class Jit {
 		Sys.println( haxe.Resource.getString("usage") );
 		var config = new Config();
 		if (config.isValid()) {
-			Sys.println( "You are connected to \033[1m"+config.getJiraUrl()+"\033[0m with user \033[1m"+config.getJiraUser()+"\033[0m" );
+			Sys.println( "You are connected to \033[1m"+config.getJiraUrl()+"\033[0m with user \033[1m"+config.getJiraUser()+"\033[0m\n" );
 		} else {
-			Sys.println( "You are not connected to Jira yet" );
+			Sys.println( "You are not connected to Jira yet\n" );
 		}
 	}
 }
