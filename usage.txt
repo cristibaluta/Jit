@@ -6,4 +6,4 @@ Usage:
   jit checkout <issue id> - Will switch the branch to the provided issue if exists locally
   jit commit [-log] <Commit message> - Will add and commit the changes of current branch to git. If -log is provided will log to Jirassic the commit
   jit setup - Setup the Jira credentials
-  jit install - Run this command with sudo to install the executable in one of the bin paths
+  jit install - Run this command with sudo to move the executable in one of the bin paths

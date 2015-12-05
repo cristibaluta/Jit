@@ -24,7 +24,6 @@ class Git {
 	public function searchInLocalBranches (issueId: String) : String {
 		var branches = getLocalBranches();
 		for (branch in branches) {
-			trace(branch + " indexOf " + issueId);
 			if (branch.toLowerCase().indexOf(issueId.toLowerCase()) != -1) {
 				return branch;
 			}

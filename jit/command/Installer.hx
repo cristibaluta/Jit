@@ -10,8 +10,8 @@ class Installer {
 		
 		sys.FileSystem.rename( Sys.executablePath(), binPath() + "/jit");
 		
-		Sys.println( "Installed to: " + binPath() );
-		Sys.println( "Great, you can now type only \"jit\"" );
+		Sys.println( "Installed to: \033[1m"+binPath()+"\033[0m" );
+		Sys.println( "Great, you can now type only \033[1mjit\033[0m" );
 	}
 	
 	public function isInstalled(): Bool {
