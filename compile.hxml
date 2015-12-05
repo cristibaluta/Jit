@@ -11,5 +11,6 @@
 -cpp cpp
 -main jit.Jit
 -resource usage.txt@usage
+-cmd mv cpp/Jit build/jit
 
 #-cmd neko jit install
