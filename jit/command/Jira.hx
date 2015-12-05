@@ -25,25 +25,33 @@ class Jira {
 	public function displayIssueDetails() {
 		
 		var issueKey = new JiraIssueKeyValidator().validateIssueKey(args[0]);
-		var requestUser = new JiraRequest();
-		requestUser.getIssue (issueKey, function (response: Dynamic) {
-			Sys.println( response.key );
-			Sys.println( response.fields.summary );
-			Sys.println( response.key + "_" + issueSummaryToGitBranch(response.fields.summary));
+		var request = new JiraRequest();
+		request.getIssue (issueKey, function (response: Dynamic) {
+			if (response == null) {
+				Sys.println( "Server error" );
+			} else {
+				Sys.println( "Issue id: \033[1m"+response.key+"\033[0m" );
+				Sys.println( "Issue title: \033[1m"+response.fields.summary+"\033[0m" );
+				Sys.println( "Branch name: \033[1m"+response.key + "_" + issueSummaryToGitBranch(response.fields.summary)+"\033[0m" );
+			}
 		});
 	}
 	
 	public function openIssue (issueKey: String) {
 		
 		issueKey = new JiraIssueKeyValidator().validateIssueKey(issueKey);
-		var requestUser = new JiraRequest();
-		requestUser.getIssue (issueKey, function (response: Dynamic) {
-			// Open the url
-			var config = new Config();
-			var baseUrl = config.getJiraUrl();
-			var issueUrl = baseUrl + "/jira/browse/" + response.key;
-			Sys.command("osascript", ["-e", "tell application \"Safari\" to activate"]);
-			Sys.command("osascript", ["-e", "tell application \"Safari\" to open location \"" + issueUrl + "\""]);
+		var request = new JiraRequest();
+		request.getIssue (issueKey, function (response: Dynamic) {
+			if (response == null) {
+				Sys.println( "Server error" );
+			} else {
+				// Open the url
+				var config = new Config();
+				var baseUrl = config.getJiraUrl();
+				var issueUrl = baseUrl + "/jira/browse/" + response.key;
+				Sys.command("osascript", ["-e", "tell application \"Safari\" to activate"]);
+				Sys.command("osascript", ["-e", "tell application \"Safari\" to open location \"" + issueUrl + "\""]);
+			}
 		});
 	}
 	

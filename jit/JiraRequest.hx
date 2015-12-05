@@ -21,9 +21,15 @@ class JiraRequest {
 		baseUrl + "/jira/rest/api/2/issue/" + key + "?fields=key,summary"]);
 		process.exitCode();
 		var result = process.stdout.readAll().toString();
+		trace(result);
 		if (isValidResponse(result)) {
-			var json = jsonResponse(result);
-			completion(json);
+			try {
+				var json = jsonResponse(result);
+				trace(json);
+				completion(json);
+			} catch (e:Dynamic) {
+				completion(null);
+			}
 		} else {
 			completion(null);
 		}

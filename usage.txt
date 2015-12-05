@@ -1,9 +1,9 @@
 Jit 1.0 - (c)2015 Cristian Baluta
 Usage:
-  jit <issue id> - Returns the issue details from server
-  jit open <issue id> - Will find the link of the issue and open it in the the browser
+  jit <issue id> - Returns the issue details from server. <issue id> is of form chars-numbers or charsnumbers (ex: A-54, A54, a54)
+  jit open <issue id> - Will build the link of the issue and open it in the the browser
   jit branch <issue id> - Will create a branch with the name of the issue after is formatted properly
   jit checkout <issue id> - Will switch the branch to the provided issue if exists locally
   jit commit [-log] <Commit message> - Will add and commit the changes of current branch to git. If -log is provided will log to Jirassic the commit
-  jit setup - Will ask you for Jira credentials
-<issue id> is of form chars-numbers or charsnumbers (A-54, A54, a54)
+  jit setup - Setup the Jira credentials
+  jit install - Run this command with sudo to install the executable in one of the bin paths

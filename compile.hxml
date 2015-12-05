@@ -5,8 +5,6 @@
 --next
 -neko jit_tests.n
 -main JitTests
--resource usage.txt@usage
-
 -cmd neko jit_tests
 
 --next

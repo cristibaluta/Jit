@@ -13,20 +13,24 @@ class Jit {
 		} else {
 			switch (args[0]) {
 				case "open":
-					var jira = new Jira(args);
-					jira.openIssue( args[1] );
+					if (hasConfig()) {
+						var jira = new Jira(args);
+						jira.openIssue( args[1] );
+					}
 					
 				case "branch":
-					var jira = new Jira([args[1]]);
-					jira.getFormattedIssueForGit( function (branchName: String) {
-						if (branchName != null) {
-							var git = new Git(args);
-								git.createBranchNamed( branchName );
-							Sys.println( "New branch created: " + branchName );
-						} else {
-							Sys.println( "Server error" );
-						}
-					} );
+					if (hasConfig()) {
+						var jira = new Jira([args[1]]);
+						jira.getFormattedIssueForGit( function (branchName: String) {
+							if (branchName != null) {
+								var git = new Git(args);
+									git.createBranchNamed( branchName );
+								Sys.println( "New branch created: " + branchName );
+							} else {
+								Sys.println( "Server error" );
+							}
+						});
+					}
 					
 				case "checkout","co":
 					var issueKey = new JiraIssueKeyValidator().validateIssueKey(args[1]);
@@ -39,12 +43,19 @@ class Jit {
 					}
 					
 				case "commit","ci":
-					args.shift();
-					var git = new Git(args);
-						git.commit(args);
-					var jirassic = new Jirassic(args);
-						jirassic.logCommit("", args);
-						
+					var firstArg = args.shift();// Remove the first arg which can be -log or <issue id>
+					switch (firstArg) {
+						case "-log","-l":
+							args.shift();
+							var git = new Git(args);
+							git.commit(args);
+							var jirassic = new Jirassic(args);
+							jirassic.logCommit("", args);
+						default:
+							var git = new Git(args);
+							git.commit(args);
+					}
+					
 				case "setup":
 					var setup = new Setup();
 						setup.run();
@@ -54,15 +65,30 @@ class Jit {
 						installer.run();
 						
 				default:
-					var jira = new Jira(args);
+					if (hasConfig()) {
+						var jira = new Jira(args);
 						jira.displayIssueDetails();
+					}
 			}
 		}
 	}
 
+	static function hasConfig() : Bool {
+		var config = new Config();
+		if (!config.isValid()) {
+			Sys.println( "Jira credentials are missing, please run \033[1mjit setup\033[0m first" );
+			return false;
+		}
+		return true;
+	}
+
 	static public function printUsage() {
 		Sys.println( haxe.Resource.getString("usage") );
-		Sys.println( "You are connected to" );
-		Sys.println( haxe.Resource.getString("credentials") );
+		var config = new Config();
+		if (config.isValid()) {
+			Sys.println( "You are connected to \033[1m"+config.getJiraUrl()+"\033[0m with user \033[1m"+config.getJiraUser()+"\033[0m" );
+		} else {
+			Sys.println( "You are not connected to Jira yet" );
+		}
 	}
 }
