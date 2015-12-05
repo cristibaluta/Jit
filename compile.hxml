@@ -8,4 +8,10 @@
 -resource usage.txt@usage
 
 -cmd neko jit_tests
-#-cmd neko jit setup
+
+--next
+-cpp cpp
+-main jit.Jit
+-resource usage.txt@usage
+
+#-cmd neko jit install

@@ -46,11 +46,13 @@ class Jit {
 						jirassic.logCommit("", args);
 						
 				case "setup":
-				var setup = new Setup();
-					setup.run();
+					var setup = new Setup();
+						setup.run();
 					
-				case "lunch":
-				
+				case "install":
+					var installer = new Installer();
+						installer.run();
+						
 				default:
 					var jira = new Jira(args);
 						jira.displayIssueDetails();
