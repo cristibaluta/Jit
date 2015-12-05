@@ -23,7 +23,7 @@ class Git {
 	public function commitAllAndPush (comments: Array<String>) {
 		Sys.command("git", ["add", "."]);
 		commit(comments);
-		Sys.command("git", ["push", "--set-upstream"]);
+		Sys.command("git", ["push"]);
 	}
 	
 	public function searchInLocalBranches (issueId: String) : String {

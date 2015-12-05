@@ -1,6 +1,6 @@
 package jit.security;
 
-class OSXKeychain implements Keychain {
+class OSXKeychain implements KeychainInterface {
 	
 	public function new() {}
 	

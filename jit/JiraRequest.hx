@@ -12,7 +12,7 @@ class JiraRequest {
 		var config = new Config();
 		var baseUrl = config.getJiraUrl();
 		var user = config.getJiraUser();
-		var pass = new OSXKeychain().getPasswordForUser(user);
+		var pass = new Keychain().getPasswordForUser(user);
 		
 		//curl -D- -u cbaluta:Cr1st1_Tulc3a -X GET -H "Content-Type: application/json" https://dev.mobility-media.de/jira/rest/api/2/user?username=cbaluta
 		
