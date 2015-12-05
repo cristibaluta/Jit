@@ -17,7 +17,6 @@ class Git {
 	}
 	
 	public function commit (comments: Array<String>) {
-		Sys.command("git", ["add", "."]);
 		Sys.command("git", ["commit", "-m", comments.join(" ")]);
 	}
 	
