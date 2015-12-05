@@ -13,7 +13,7 @@ class Setup {
 	
 	public function run () {
 		
-		Sys.println( "Jira url. Current url is " + config.getJiraUrl() );
+		Sys.println( "Current url to Jira is: \033[1m"+config.getJiraUrl()+"\033[0m" );
 		var jiraUrl = param("Jira url");
 		if (jiraUrl != "") {
 			setJiraUrl( jiraUrl );
@@ -33,7 +33,7 @@ class Setup {
 			setJiraPasswordForUser( user, pass );
 		}
 		
-		Sys.println( "Great, we are done!" );
+		Sys.println( "Great, we are done with Jira!" );
 	}
 	
 	public function setJiraUrl (url: String) {
@@ -49,9 +49,9 @@ class Setup {
 		keychain.setUserAndPassword (user, pass);
 	}
 	
-	function param( name, ?passwd ) {
+	function param (name, ?passwd) {
 		Sys.print(name + " : ");
-		if( passwd ) {
+		if (passwd) {
 			var s = new StringBuf();
 			do switch Sys.getChar(false) {
 				case 10, 13: break;
