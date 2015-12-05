@@ -42,3 +42,6 @@ For a complete list of commands and details run
 Some of the commands need to connect to Jira, you need to run jit setup to configure it, but you'll be alerted when will be the case.
 
 Some of the commands need a Mac because it uses AppleScript to tell osx to do stuffs
+
+### ToDo
+Doesn't deal with errors very well, need to take into account errors everywhere
