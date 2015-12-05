@@ -11,7 +11,8 @@ class Jit {
 		if (args.length == 0) {
 			printUsage();
 		} else {
-			switch (args[0]) {
+			var command = args[0];
+			switch (command) {
 				case "open":
 					if (hasConfig()) {
 						var jira = new Jira(args);
@@ -42,18 +43,22 @@ class Jit {
 						Sys.println( "Can't find a local branch containing: " + args[1] );
 					}
 					
-				case "commit","ci":
+				case "commit","ci","magic":
 					var firstArg = args.shift();// Remove the first arg which can be -log or <issue id>
 					switch (firstArg) {
 						case "-log","-l":
 							args.shift();
 							var git = new Git(args);
-							git.commit(args);
+							command == "magic"
+							? git.commitAllAndPush(args)
+							: git.commit(args);
 							var jirassic = new Jirassic(args);
 							jirassic.logCommit("", args);
 						default:
 							var git = new Git(args);
-							git.commit(args);
+							command == "magic"
+							? git.commitAllAndPush(args)
+							: git.commit(args);
 					}
 					
 				case "setup":

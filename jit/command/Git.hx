@@ -20,6 +20,12 @@ class Git {
 		Sys.command("git", ["commit", "-m", comments.join(" ")]);
 	}
 	
+	public function commitAllAndPush (comments: Array<String>) {
+		Sys.command("git", ["add", "."]);
+		commit(comments);
+		Sys.command("git", ["push", "--set-upstream"]);
+	}
+	
 	public function searchInLocalBranches (issueId: String) : String {
 		var branches = getLocalBranches();
 		for (branch in branches) {
