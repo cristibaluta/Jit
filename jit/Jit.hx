@@ -52,7 +52,7 @@ class Jit {
 							command == "magic"
 							? git.commitAllAndPush(args)
 							: git.commit(args);
-							var jirassic = new Jirassic(args);
+							var jirassic = new Jirassic();
 							jirassic.logCommit("", args);
 						default:
 							var git = new Git();
