@@ -61,6 +61,10 @@ class Jit {
 							: git.commit(args);
 					}
 					
+				case "log","jirassic":
+					var jirassic = new Jirassic();
+					jirassic.logCommit("", args);
+					
 				case "setup":
 					var setup = new Setup();
 						setup.run();
