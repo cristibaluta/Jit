@@ -16,6 +16,6 @@ class Keychain implements KeychainInterface {
 	}
 	
 	public function getPasswordForUser (user: String) : String {
-		return getPasswordForUser(user);
+		return keychain.getPasswordForUser(user);
 	}
 }
