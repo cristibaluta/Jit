@@ -6,12 +6,12 @@ class Installer {
 		
 	}
 	
-	public function run () {
+	public function run() {
 		
 		sys.FileSystem.rename( Sys.executablePath(), binPath() + "/jit");
 		
 		Sys.println( "Installed to: \033[1m"+binPath()+"\033[0m" );
-		Sys.println( "Great, you can now type only \033[1mjit\033[0m" );
+		Sys.println( "Great, you can now call \033[1mjit\033[0m from anywhere" );
 	}
 	
 	public function isInstalled(): Bool {

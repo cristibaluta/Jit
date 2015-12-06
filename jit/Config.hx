@@ -14,7 +14,7 @@ class Config {
 	public function new() {
 		var path = configFilePath();
 		if (!sys.FileSystem.exists(path)) {
-			var fout = File.write( path, false );
+			var fout = File.write(path, false);
 				fout.close();
 		}
 		content = File.getContent( path ).split("\n");
