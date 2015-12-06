@@ -25,6 +25,7 @@ Commiting to repo:
 
 	jit commit Some commit message here // As you can see, no need for "", jit knows that after commit follows a message
 	jit ci Some commit message here // Shortcut available here also
+	jit magic Some commit message here // Add files to stage, commits, then pushes to server
 
 For a complete list of commands and details run
 
