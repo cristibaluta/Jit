@@ -2,10 +2,8 @@ package jit.command;
 
 class Git {
 	
-	var args: Array<String>;
-
-	public function new (args: Array<String>) {
-		this.args = args;
+	public function new () {
+		
 	}
 	
 	public function createBranchNamed (branchName: String) {

@@ -11,20 +11,20 @@ class Jit {
 		if (args.length == 0) {
 			printUsage();
 		} else {
-			var command = args[0];
+			var command = args.shift();
 			switch (command) {
 				case "open":
 					if (hasConfig()) {
 						var jira = new Jira(args);
-						jira.openIssue( args[1] );
+						jira.openIssue( args[0] );
 					}
 					
 				case "branch":
 					if (hasConfig()) {
-						var jira = new Jira([args[1]]);
+						var jira = new Jira([args[0]]);
 						jira.getFormattedIssueForGit( function (branchName: String) {
 							if (branchName != null) {
-								var git = new Git(args);
+								var git = new Git();
 									git.createBranchNamed( branchName );
 								Sys.println( "New branch created: " + branchName );
 							} else {
@@ -34,28 +34,28 @@ class Jit {
 					}
 					
 				case "checkout","co":
-					var issueKey = new JiraIssueKeyValidator().validateIssueKey(args[1]);
-					var git = new Git(args);
+					var issueKey = new JiraIssueKeyValidator().validateIssueKey(args[0]);
+					var git = new Git();
 					var gitBranchName = git.searchInLocalBranches( issueKey );
 					if (gitBranchName != null) {
 						git.checkoutBranchNamed( gitBranchName );
 					} else {
-						Sys.println( "Can't find a local branch containing: " + args[1] );
+						Sys.println( "Can't find a local branch containing: " + args[0] );
 					}
 					
 				case "commit","ci","magic":
-					var firstArg = args.shift();// Remove the first arg which can be -log or <issue id>
+					var firstArg = args[0];// Remove the first arg which can be -log or <issue id>
 					switch (firstArg) {
 						case "-log","-l":
 							args.shift();
-							var git = new Git(args);
+							var git = new Git();
 							command == "magic"
 							? git.commitAllAndPush(args)
 							: git.commit(args);
 							var jirassic = new Jirassic(args);
 							jirassic.logCommit("", args);
 						default:
-							var git = new Git(args);
+							var git = new Git();
 							command == "magic"
 							? git.commitAllAndPush(args)
 							: git.commit(args);
@@ -70,8 +70,9 @@ class Jit {
 						installer.run();
 						
 				default:
+					// If first arg is no command means it's an <issue id>
 					if (hasConfig()) {
-						var jira = new Jira(args);
+						var jira = new Jira([command]);
 						jira.displayIssueDetails();
 					}
 			}
