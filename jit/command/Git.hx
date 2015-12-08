@@ -25,13 +25,18 @@ class Git {
 	}
 	
 	public function searchInLocalBranches (issueId: String) : String {
-		var branches = getLocalBranches();
-		for (branch in branches) {
+		for (branch in getLocalBranches()) {
 			if (branch.toLowerCase().indexOf(issueId.toLowerCase()) != -1) {
 				return branch;
 			}
 		}
 		return null;
+	}
+	
+	public function currentBranchName() : String {
+		var current = searchInLocalBranches("*");
+		current = StringTools.trim(current.split("*")[1]);
+		return current;
 	}
 	
 	function getLocalBranches() : Array<String> {

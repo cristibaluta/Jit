@@ -24,6 +24,11 @@ class Jit {
 						jira.openIssue( args[0] );
 					}
 					
+				case "current":
+					var git = new Git();
+					var branchName = git.currentBranchName();
+					Sys.println( "Current branch: \033[1m" + branchName + "\033[0m" );
+					
 				case "branch":
 					if (hasConfig()) {
 						var jira = new Jira([args[0]]);
@@ -31,7 +36,7 @@ class Jit {
 							if (branchName != null) {
 								var git = new Git();
 									git.createBranchNamed( branchName );
-								Sys.println( "New branch created: " + branchName );
+								Sys.println( "New branch created: \033[1m" + branchName + "\033[0m" );
 							} else {
 								Sys.println( "Server error" );
 							}
