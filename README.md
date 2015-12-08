@@ -2,6 +2,8 @@
 Jira and Git brought together, create and switch branches by knowing only the task id.
 Jit connects to Jira to find the task title then formats it properly as a valid branch name.
 
+![Screenshot](http://s18.postimg.org/vv7c6n8cp/jit.png)
+
 ### Commands
 Only the most basic commands are implemented that deals with branch names.
 Ex you have an issue with this details:
@@ -34,14 +36,22 @@ For a complete list of commands and details run
 
 ### Installing
 
+Work on Mac only at this point.
+
  1. Download the executable from build directory then run
 
 	sudo ./jit install
 
- 2. Download the sources and compile yourself. Note that the cpp folder is missing, please create it before compiling. Sources are in Haxe and dependencies are hxcpp. After you compile you still need to do step 1 if you want to call the app from anywhere
+ 2. Download the sources and compile yourself. To compile you need the Haxe compiler (http://haxe.org) and the hxcpp haxelib. Note that the cpp folder is added to .gitignore, please create it in the root before compiling. After you compile you still need to do step 1 if you want to call the app from anywhere
+ 	
+	haxelib install hxcpp // Install the hxcpp dependency
+	haxe compile.hxml // Compile the application
+	cd build
+	sudo ./jit install
+	jit
 
 ### Other
-Some of the commands need to connect to Jira, you need to run jit setup to configure it, but you'll be alerted when will be the case.
+Some of the commands need to connect to Jira, you need to run jit setup to configure it.
 
 Some of the commands need a Mac because it uses AppleScript to tell osx to do stuffs
 

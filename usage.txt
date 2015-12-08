@@ -6,5 +6,6 @@ Usage:
   jit checkout | co <branch>     Switch the branch to the first local branch containing the keyword
   jit commit | ci [-log | -l] <Commit message>     Commit staged files. -log will log to Jirassic the commit details
   jit magic [-log | -l] <Commit message>           Stage all changes, commit, and push
+  jit log | jirassic <Message>   Sends to Jirassic a message to be logged with the current timestamp
   jit setup                      Setup the Jira credentials
   jit install                    Run this command with sudo to move the executable in one of the bin paths
