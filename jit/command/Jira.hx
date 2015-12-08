@@ -15,7 +15,7 @@ class Jira {
 		var requestUser = new JiraRequest();
 		requestUser.getIssue (issueKey, function (response: Dynamic) {
 			if (response != null) {
-				completion (response.key + "_" + issueSummaryToGitBranch(response.fields.summary));
+				completion (response.key + "_" + issueTitleToBranchName(response.fields.summary));
 			} else {
 				completion (null);
 			}
@@ -32,7 +32,7 @@ class Jira {
 			} else {
 				Sys.println( "Issue id: \033[1m"+response.key+"\033[0m" );
 				Sys.println( "Issue title: \033[1m"+response.fields.summary+"\033[0m" );
-				Sys.println( "Branch name: \033[1m"+response.key + "_" + issueSummaryToGitBranch(response.fields.summary)+"\033[0m" );
+				Sys.println( "Branch name: \033[1m"+response.key + "_" + issueTitleToBranchName(response.fields.summary)+"\033[0m" );
 			}
 		});
 	}
@@ -55,7 +55,7 @@ class Jira {
 		});
 	}
 	
-	function issueSummaryToGitBranch (string: String) : String {
+	function issueTitleToBranchName (string: String) : String {
 		
 		string = (~/\[(\w+)\]/g).replace(string, "");
 		string = (~/[^a-zA-Z\d-]+/g).replace(string, "_");
