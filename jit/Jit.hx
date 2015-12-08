@@ -54,21 +54,19 @@ class Jit {
 					}
 					
 				case "commit","ci","magic":
-					var firstArg = args[0];// Remove the first arg which can be -log or <issue id>
-					switch (firstArg) {
-						case "-log","-l":
-							args.shift();
-							var git = new Git();
-							command == "magic"
-							? git.commitAllAndPush(args)
-							: git.commit(args);
-							var jirassic = new Jirassic();
-							jirassic.logCommit("", args);
-						default:
-							var git = new Git();
-							command == "magic"
-							? git.commitAllAndPush(args)
-							: git.commit(args);
+					var firstArg = args[0];// First arg can be -log
+					if (firstArg == "-log" || firstArg == "-l") {
+						args.shift();
+					}
+					var git = new Git();
+					var issueId = Jira.issueIdFromBranchName( git.currentBranchName() );
+					command == "magic"
+					? git.commitAllAndPush([issueId].concat(args))
+					: git.commit(args);
+					
+					if (firstArg == "-log" || firstArg == "-l" || command == "magic") {
+						var jirassic = new Jirassic();
+						jirassic.logCommit(issueId, args);
 					}
 					
 				case "log","jirassic":
