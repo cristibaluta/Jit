@@ -19,6 +19,12 @@ class Installer {
 	}
 	
 	function binPath(): String {
-		return Sys.getEnv("PATH").split(":")[0];
+		var paths = Sys.getEnv("PATH").split(":");
+		for (path in paths) {
+			if (path.indexOf("local") != -1) {// On osx El Capitan executables should stay in local/bin
+				return path;
+			}
+		}
+		return paths[0];
 	}
 }
