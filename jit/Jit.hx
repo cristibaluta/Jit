@@ -2,7 +2,6 @@ package jit;
 import jit.validator.*;
 import jit.command.*;
 
-//#if static_ndll
 #if cpp
 import cpp.link.StaticStd;
 import cpp.link.StaticRegexp;
