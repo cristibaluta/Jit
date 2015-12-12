@@ -61,7 +61,7 @@ class Jit {
 					var git = new Git();
 					var issueId = Jira.issueIdFromBranchName( git.currentBranchName() );
 					command == "magic"
-					? git.commitAllAndPush([issueId].concat(args))
+					? git.commitAllAndPush( issueId == null ? args : [issueId].concat(args))
 					: git.commit(args);
 					
 					if (firstArg == "-log" || firstArg == "-l" || command == "magic") {
