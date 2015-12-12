@@ -1,6 +1,4 @@
 package jit.command;
-import haxe.io.Eof;
-import sys.io.*;
 import jit.security.*;
 
 class Setup {
@@ -13,19 +11,20 @@ class Setup {
 	
 	public function run () {
 		
+		Sys.println( "Leave blank if you want to keep the previous value");
 		Sys.println( "Current url to Jira is: \033[1m"+config.getJiraUrl()+"\033[0m" );
-		var jiraUrl = param("Jira url");
+		var jiraUrl = param("1) Full path to Jira web app (usually it contains \033[1mjira\033[0m at the beginning or at the end)");
 		if (jiraUrl != "") {
 			setJiraUrl( jiraUrl );
 		}
 		
 		// Ask for username
-		var user = param("Jira username");
+		var user = param("2) Jira username");
 		if (user != "") {
 			setJiraUser( user );
 		}
 		
-		var pass = param("Jira password");
+		var pass = param("3) Jira password", true);
 		if (user == "") {
 			user = config.getJiraUser();
 		}
@@ -33,7 +32,7 @@ class Setup {
 			setJiraPasswordForUser( user, pass );
 		}
 		
-		Sys.println( "Great, we are done with Jira!" );
+		Sys.println( "\nGreat, we are done with Jira!\n" );
 	}
 	
 	public function setJiraUrl (url: String) {
