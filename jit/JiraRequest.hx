@@ -13,7 +13,7 @@ class JiraRequest {
 		var config = new Config();
 		var baseUrl = new JiraUrlValidator().validateUrl(config.getJiraUrl());
 		
-		//curl -D- -u user:pass -X GET -H "Content-Type: application/json" https://mycompany.com/jira/rest/api/2/user?username=cbaluta
+		// curl -D- -u user:pass -X GET -H "Content-Type: application/json" https://mycompany.com/jira/rest/api/2/user?username=cbaluta
 		
 		// curl -D- -X GET -H "Authorization: Basic userpassbase64" -H "Content-Type: application/json" https://mycompany.com/jira/rest/api/2/user?username=cbaluta
 		
@@ -28,17 +28,58 @@ class JiraRequest {
 		
 		process.exitCode();
 		var result = process.stdout.readAll().toString();
-/*		trace(result);*/
-		if (isValidResponse(result)) {
+		handleResponse (result, completion);
+	}
+	
+	public function getUserProfile (user: String, completion: Dynamic->Void) {
+		
+		var config = new Config();
+		var baseUrl = new JiraUrlValidator().validateUrl(config.getJiraUrl());
+		
+		// curl -D- -u fred:fred -X GET -H "Content-Type: application/json" http://kelpie9:8081/rest/api/2/user?username=fred
+		
+		var process = new sys.io.Process("curl", ["-D-", "-X", "GET",
+		"-H", "Authorization: Basic " + encriptedCredentials(),
+		"-H", "Content-Type: application/json",
+		baseUrl + "rest/api/2/user?username=" + user]);
+		
+		process.exitCode();
+		var result = process.stdout.readAll().toString();
+		handleResponse (result, completion);
+	}
+	
+	public function getUserTasks (user: String, completion: Dynamic->Void) {
+		trace("get profile ");
+		var config = new Config();
+		var baseUrl = new JiraUrlValidator().validateUrl(config.getJiraUrl());
+		
+		// curl -D- -u fred:fred -X GET -H "Content-Type: application/json" http://kelpie9:8081/rest/api/2/search?jql=assignee=fred
+		
+		var process = new sys.io.Process("curl", ["-D-", "-X", "GET",
+		"-H", "Authorization: Basic " + encriptedCredentials(),
+		"-H", "Content-Type: application/json",
+		baseUrl + "rest/api/2/search?jql=assignee=" + user]);
+		
+		process.exitCode();
+		var result = process.stdout.readAll().toString();
+		trace(result);
+		handleResponse (result, completion);
+	}
+	
+	
+	function handleResponse (response: String, completion: Dynamic->Void): Void {
+		if (isValidResponse(response)) {
+			var json: Dynamic = null;
 			try {
-				var json = jsonResponse(result);
-				completion(json);
+				json = jsonResponse(response);
 			} catch (e: Dynamic) {
-				trace(result);
-				completion(null);
+				trace("Error parsing json");
+				trace(response);
 			}
+			completion(json);
 		} else {
-			trace(result);
+			trace("The response doesn't contain 200 OK header");
+			trace(response);
 			completion(null);
 		}
 	}

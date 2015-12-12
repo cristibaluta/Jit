@@ -3,9 +3,11 @@ Usage:
   jit <issue id>                 Returns the issue details from server. (Ex: A-54, A54, a54)
   jit open <issue id>            Opens the issue in browser
   jit branch <issue id>          Create a branch with the name of the issue after is formatted properly
+  jit current                    Display the current git branch
   jit checkout | co <branch>     Switch the branch to the first local branch containing the keyword
   jit commit | ci [-log | -l] <Commit message>     Commit staged files. -log will log to Jirassic the commit details
-  jit magic [-log | -l] <Commit message>           Stage all changes, commit, and push
+  jit magic <Commit message>     Stage all changes, commit, push, and log the commit message to Jirassic
   jit log | jirassic <Message>   Sends to Jirassic a message to be logged with the current timestamp
   jit setup                      Setup the Jira credentials
+  jit me                         Check the Jira credentials, display your user
   jit install                    Run this command with sudo to move the executable in one of the bin paths

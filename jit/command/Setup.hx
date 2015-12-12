@@ -32,7 +32,7 @@ class Setup {
 			setJiraPasswordForUser( user, pass );
 		}
 		
-		Sys.println( "\nGreat, we are done with Jira!\n" );
+		Sys.println( "\nGreat, we are done with Jira!\nCheck if the connection is working with \033[1mjit me\033[0m" );
 	}
 	
 	public function setJiraUrl (url: String) {
