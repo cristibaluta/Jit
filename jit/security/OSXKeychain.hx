@@ -7,7 +7,8 @@ class OSXKeychain implements KeychainInterface {
 	// security add-generic-password -a user -s jit.com.ralcr -p pass
 	public function setUserAndPassword (user: String, password: String) : Void {
 		
-		Sys.command("security", ["add-generic-password", "-a", user, "-s", "jit.com.ralcr", "-p", password]);
+		Sys.command("security", ["add-generic-password", "-a", user, 
+					"-s", "jit.com.ralcr", "-p", password, "-U", "-D", "jira password"]);
 	}
 	
 	// security find-generic-password -wa cbaluta
