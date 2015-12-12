@@ -55,6 +55,33 @@ class Jira {
 		});
 	}
 	
+	public function listMyProfile() {
+
+		var config = new Config();
+		var request = new JiraRequest();
+		request.getUserProfile (config.getJiraUser(), function (response: Dynamic) {
+			if (response == null) {
+				Sys.println( "Server error" );
+			} else {
+				Sys.println("Name : " + response.displayName);
+				Sys.println("Email : " + response.emailAddress);
+			}
+		});
+	}
+	
+	public function listMyTasks() {
+
+		var config = new Config();
+		var request = new JiraRequest();
+		request.getUserProfile (config.getJiraUser(), function (response: Dynamic) {
+			if (response == null) {
+				Sys.println( "Server error" );
+			} else {
+				Sys.command(response);
+			}
+		});
+	}
+	
 	function issueTitleToBranchName (string: String) : String {
 		
 		string = (~/\[(\w+)\]/g).replace(string, "");

@@ -24,6 +24,16 @@ class Jit {
 						jira.openIssue( args[0] );
 					}
 					
+				case "me":
+					if (hasConfig()) {
+						var jira = new Jira(args);
+						if (args[0] == "tasks") {
+							jira.listMyTasks();
+						} else {
+							jira.listMyProfile();
+						}
+					}
+					
 				case "current":
 					var git = new Git();
 					var branchName = git.currentBranchName();
