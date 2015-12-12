@@ -1,5 +1,6 @@
 package jit;
 import jit.security.*;
+import jit.validator.*;
 
 class JiraRequest {
 	
@@ -10,27 +11,34 @@ class JiraRequest {
 	public function getIssue (key: String, completion: Dynamic->Void) {
 		
 		var config = new Config();
-		var baseUrl = config.getJiraUrl();
-		var user = config.getJiraUser();
-		var pass = new Keychain().getPasswordForUser(user);
+		var baseUrl = new JiraUrlValidator().validateUrl(config.getJiraUrl());
 		
-		//curl -D- -u cbaluta:Cr1st1_Tulc3a -X GET -H "Content-Type: application/json" https://dev.mobility-media.de/jira/rest/api/2/user?username=cbaluta
+		//curl -D- -u user:pass -X GET -H "Content-Type: application/json" https://mycompany.com/jira/rest/api/2/user?username=cbaluta
 		
-		var process = new sys.io.Process("curl", ["-D-", "-u", user+":"+pass, "-X", "GET", "-H", 
-		"\"Content-Type: application/json\"", 
-		baseUrl + "/jira/rest/api/2/issue/" + key + "?fields=key,summary"]);
+		// curl -D- -X GET -H "Authorization: Basic userpassbase64" -H "Content-Type: application/json" https://mycompany.com/jira/rest/api/2/user?username=cbaluta
+		
+/*		var process = new sys.io.Process("curl", ["-D-", "-u", user+":"+pass, "-X", "GET", "-H",
+		"\"Content-Type: application/json\"",
+		baseUrl + "rest/api/2/issue/" + key + "?fields=key,summary"]);*/
+		
+		var process = new sys.io.Process("curl", ["-D-", "-X", "GET",
+		"-H", "Authorization: Basic " + encriptedCredentials(),
+		"-H", "Content-Type: application/json",
+		baseUrl + "rest/api/2/issue/" + key + "?fields=key,summary"]);
+		
 		process.exitCode();
 		var result = process.stdout.readAll().toString();
-		/*trace(result);*/
+/*		trace(result);*/
 		if (isValidResponse(result)) {
 			try {
 				var json = jsonResponse(result);
 				completion(json);
-			} catch (e:Dynamic) {
+			} catch (e: Dynamic) {
 				trace(result);
 				completion(null);
 			}
 		} else {
+			trace(result);
 			completion(null);
 		}
 	}
@@ -42,5 +50,13 @@ class JiraRequest {
 	function jsonResponse (response: String): Dynamic {
 		var components = response.split("Transfer-Encoding: chunked");
 		return haxe.Json.parse(components.pop());
+	}
+	
+	function encriptedCredentials(): String {
+		var config = new Config();
+		var user = config.getJiraUser();
+		var pass = new Keychain().getPasswordForUser(user);
+		var userPassword64 = haxe.crypto.Base64.encode( haxe.io.Bytes.ofString (user + ":" + pass) );
+		return userPassword64;
 	}
 }
