@@ -1,16 +1,16 @@
 package jit;
-import jit.security.*;
 import jit.validator.*;
 
 class JiraRequest {
 	
+	var config: Config;
+	
 	public function new () {
-		
+		config = new Config();
 	}
 	
 	public function getIssue (key: String, completion: Dynamic->Void) {
 		
-		var config = new Config();
 		var baseUrl = new JiraUrlValidator().validateUrl(config.getJiraUrl());
 		
 		// curl -D- -u user:pass -X GET -H "Content-Type: application/json" https://mycompany.com/jira/rest/api/2/user?username=cbaluta
@@ -33,7 +33,6 @@ class JiraRequest {
 	
 	public function getUserProfile (user: String, completion: Dynamic->Void) {
 		
-		var config = new Config();
 		var baseUrl = new JiraUrlValidator().validateUrl(config.getJiraUrl());
 		
 		// curl -D- -u fred:fred -X GET -H "Content-Type: application/json" http://kelpie9:8081/rest/api/2/user?username=fred
@@ -49,8 +48,7 @@ class JiraRequest {
 	}
 	
 	public function getUserTasks (user: String, completion: Dynamic->Void) {
-		trace("get profile ");
-		var config = new Config();
+		
 		var baseUrl = new JiraUrlValidator().validateUrl(config.getJiraUrl());
 		
 		// curl -D- -u fred:fred -X GET -H "Content-Type: application/json" http://kelpie9:8081/rest/api/2/search?jql=assignee=fred
@@ -94,9 +92,8 @@ class JiraRequest {
 	}
 	
 	function encriptedCredentials(): String {
-		var config = new Config();
 		var user = config.getJiraUser();
-		var pass = new Keychain().getPasswordForUser(user);
+		var pass = config.getJiraPassword();
 		var userPassword64 = haxe.crypto.Base64.encode( haxe.io.Bytes.ofString (user + ":" + pass) );
 		return userPassword64;
 	}

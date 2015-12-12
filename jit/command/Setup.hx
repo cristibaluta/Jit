@@ -1,5 +1,4 @@
 package jit.command;
-import jit.security.*;
 
 class Setup {
 	
@@ -13,6 +12,7 @@ class Setup {
 		
 		Sys.println( "Leave blank if you want to keep the previous value");
 		Sys.println( "Current url to Jira is: \033[1m"+config.getJiraUrl()+"\033[0m" );
+		
 		var jiraUrl = param("1) Full path to Jira web app (usually it contains \033[1mjira\033[0m at the beginning or at the end)");
 		if (jiraUrl != "") {
 			setJiraUrl( jiraUrl );
@@ -29,23 +29,22 @@ class Setup {
 			user = config.getJiraUser();
 		}
 		if (user != "" && user != null && pass != "") {
-			setJiraPasswordForUser( user, pass );
+			setJiraPassword( pass );
 		}
 		
 		Sys.println( "\nGreat, we are done with Jira!\nCheck if the connection is working with \033[1mjit me\033[0m" );
 	}
 	
-	public function setJiraUrl (url: String) {
+	function setJiraUrl (url: String) {
 		config.setJiraUrl ( url );
 	}
 	
-	public function setJiraUser (user: String) {
+	function setJiraUser (user: String) {
 		config.setJiraUser ( user );
 	}
 	
-	function setJiraPasswordForUser (user: String, pass: String) {
-		var keychain = new Keychain();
-		keychain.setUserAndPassword (user, pass);
+	function setJiraPassword (pass: String) {
+		config.setJiraPassword ( pass );
 	}
 	
 	function param (name, ?passwd) {

@@ -1,6 +1,7 @@
 package jit;
 import haxe.io.Eof;
 import sys.io.*;
+import jit.security.*;
 
 /**
 Config file is of form:
@@ -40,6 +41,16 @@ class Config {
 	public function setJiraUser (user: String) {
 		content[1] = user;
 		save();
+	}
+	
+	public function getJiraPassword() : String {
+		var keychain = new Keychain();
+		return keychain.getPasswordForUser (getJiraUser());
+	}
+	
+	public function setJiraPassword (pass: String) {
+		var keychain = new Keychain();
+		keychain.setUserAndPassword (getJiraUser(), pass);
 	}
 	
 	function save() {
