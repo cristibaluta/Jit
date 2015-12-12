@@ -66,6 +66,7 @@ class Jira {
 	}
 	
 	static public function issueIdFromBranchName (branchName: String) : String {
-		return branchName.split("_")[0];
+		var components = branchName.split("_");
+		return components.length >= 2 ? components[0] : null;
 	}
 }
