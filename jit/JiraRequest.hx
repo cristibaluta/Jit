@@ -87,8 +87,8 @@ class JiraRequest {
 	}
 	
 	function jsonResponse (response: String): Dynamic {
-		var components = response.split("Transfer-Encoding: chunked");
-		return haxe.Json.parse(components.pop());
+		var components = response.split("\n{\"");
+		return haxe.Json.parse("{\"" + components.pop());
 	}
 	
 	function encriptedCredentials(): String {
