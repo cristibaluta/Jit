@@ -45,7 +45,7 @@ class Config {
 	}
 	
 	public function getBranchSeparator() : String {
-		return content[2];
+		return content[2] != null ? content[2] : "_";
 	}
 	
 	public function setBranchSeparator (separator: String) {
