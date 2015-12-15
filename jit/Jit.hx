@@ -69,7 +69,7 @@ class Jit {
 						args.shift();
 					}
 					var git = new Git();
-					var issueId = Jira.issueIdFromBranchName( git.currentBranchName() );
+					var issueId = Branch.issueIdFromBranchName( git.currentBranchName() );
 					command == "magic"
 					? git.commitAllAndPush( issueId == null ? args : [issueId].concat(args))
 					: git.commit(args);
