@@ -8,12 +8,14 @@ class Branch {
 		this.separator = separator;
 	}
 	
-	static public function issueTitleToBranchName (string: String) : String {
+	public function issueTitleToBranchName (string: String) : String {
 		
+		string = StringTools.trim(string);
 		string = (~/\[[\w ]+\]/g).replace(string, "");// Finds words between []
-		string = (~/[^a-zA-Z\d-]+/g).replace(string, "_");// Finds everything except letters and numbers
-		string = (~/_-_/g).replace(string, "_");
-		string = (~/__/g).replace(string, "_");
+		string = (~/[^a-zA-Z\d-]+/g).replace(string, separator);// Finds everything except letters and numbers
+		string = (~/_-_/g).replace(string, separator);
+		string = (~/(_)\1+/g).replace(string, separator);
+		string = (~/(-)\1+/g).replace(string, separator);
 		
 	    return string;
 	}

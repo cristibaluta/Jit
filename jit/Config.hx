@@ -7,6 +7,7 @@ import jit.security.*;
 Config file is of form:
 	JiraUrl
 	JiraUser
+	BranchWordsSeparator
 */
 class Config {
 	
@@ -40,6 +41,15 @@ class Config {
 	
 	public function setJiraUser (user: String) {
 		content[1] = user;
+		save();
+	}
+	
+	public function getBranchSeparator() : String {
+		return content[2];
+	}
+	
+	public function setBranchSeparator (separator: String) {
+		content[2] = separator;
 		save();
 	}
 	

@@ -32,6 +32,14 @@ class Setup {
 			setJiraPassword( pass );
 		}
 		
+		var separator = param("\n4) Separator between branch words (- or _)");
+		if (user != "") {
+			if (separator != "-" && separator != "_") {
+				separator = "_";
+			}
+			setBranchSeparator ( separator );
+		}
+		
 		Sys.println( "\nGreat, we are done with Jira!\nCheck if the connection is working with \033[1mjit me\033[0m" );
 	}
 	
@@ -45,6 +53,10 @@ class Setup {
 	
 	function setJiraPassword (pass: String) {
 		config.setJiraPassword ( pass );
+	}
+	
+	function setBranchSeparator (separator: String) {
+		config.setBranchSeparator ( separator );
 	}
 	
 	function param (name, ?passwd) {
