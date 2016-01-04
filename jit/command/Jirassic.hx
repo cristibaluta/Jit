@@ -8,7 +8,7 @@ class Jirassic {
 
 	// osascript -e "tell application \"Jirassic\" to set tasks to \"abcdefghij\""
 	public function logCommit (issueId: String, comments: Array<String>) {
-		var comment = (issueId != null ? (issueId + " ") : "") + comments.join(" ");
+		var comment = issueId + "::" + (issueId != null ? (issueId + " ") : "") + comments.join(" ");
 		Sys.command("osascript", ["-e", "tell application \"Jirassic\" to set tasks to \"" + comment +"\""]);
 	}
 }
