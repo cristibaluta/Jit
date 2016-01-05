@@ -17,7 +17,7 @@ class Jira {
 		var requestUser = new JiraRequest();
 		requestUser.getIssue (issueKey, function (response: Dynamic) {
 			if (response != null) {
-				completion (response.key + config.getBranchSeparator() + 
+				completion (response.key + // config.getBranchSeparator() +
 							new Branch( config.getBranchSeparator() ).issueTitleToBranchName(response.fields.summary));
 			} else {
 				completion (null);
