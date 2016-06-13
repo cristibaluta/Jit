@@ -64,6 +64,18 @@ class Jit {
 					}
 					
 				case "commit","ci","magic":
+					// Ask if commit to develop is ok
+					var git = new Git();
+					var branchName = git.currentBranchName();
+					if (branchName == "develop" || branchName == "master") {
+						Sys.println( "\033[1m\033[31mAre you sure you want to commit on " + branchName + "?\033[0m y/\033[31mn\033[0m" );
+						do switch Sys.getChar(false) {
+							case 110: return;//n
+							case 121: break;//y
+						}
+						while (true);
+					}
+					
 					var firstArg = args[0];// First arg can be -log
 					if (firstArg == "-log" || firstArg == "-l") {
 						args.shift();
