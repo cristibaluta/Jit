@@ -6,6 +6,7 @@ Usage:
   jit current                    Display the current git branch
   jit checkout | co <branch>     Switch the branch to the first local branch containing the keyword
   jit commit | ci [-log | -l] <Commit message>     Commit staged files. -log will log to Jirassic the commit details
+  jit pull <branch>              Switches to the specified branch and then pull the changes from remote
   jit magic <Commit message>     Stage all changes, commit, push, and log the commit message to Jirassic
   jit log | jirassic <Message>   Sends to Jirassic a message to be logged with the current timestamp
   jit setup                      Setup the Jira credentials
