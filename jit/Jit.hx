@@ -63,6 +63,17 @@ class Jit {
 						Sys.println( "Can't find a local branch containing: " + args[0] );
 					}
 					
+				case "pull":
+					var git = new Git();
+					if (args[0] != null) {
+						var issueKey = new JiraIssueKeyValidator().validateIssueKey(args[0]);
+						var gitBranchName = git.searchInLocalBranches( issueKey );
+						if (gitBranchName != null) {
+							git.checkoutBranchNamed( gitBranchName );
+						}
+					}
+					git.pull();
+					
 				case "commit","ci","magic":
 					// Ask if commit to develop is ok
 					var git = new Git();

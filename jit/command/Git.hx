@@ -14,6 +14,10 @@ class Git {
 		Sys.command("git", ["checkout", branchName]);
 	}
 	
+	public function pull () {
+		Sys.command("git", ["pull"]);
+	}
+	
 	public function commit (comments: Array<String>) {
 		Sys.command("git", ["commit", "-m", comments.join(" ")]);
 	}
