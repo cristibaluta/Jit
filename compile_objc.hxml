@@ -1,0 +1,6 @@
+-main jit.Jit
+-resource usage.txt@usage
+-objc objc
+-objc-bundle-version 1.0
+-objc-identifier com.ralcr.jit
+-lib hxcocoa
