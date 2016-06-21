@@ -1,5 +1,14 @@
 package jit.command;
 
+// enum TaskType {
+// 	case Issue = 0
+// 	case StartDay = 1
+// 	case Scrum = 2
+// 	case Lunch = 3
+// 	case Meeting = 4
+// 	case GitCommit = 5
+// }
+
 class Jirassic {
 	
 	public function new () {
@@ -7,8 +16,9 @@ class Jirassic {
 	}
 
 	// osascript -e "tell application \"Jirassic\" to set tasks to \"abcdefghij\""
-	public function logCommit (issueId: String, comments: Array<String>) {
-		var comment = issueId + "::" + (issueId != null ? (issueId + " ") : "") + comments.join(" ");
+	public function logCommit (taskNumber: String, comments: Array<String>) {
+		var notes = comments.join(" ");
+		var json = "{\"taskType\":\"5\", \"taskNumber\":\"" + taskNumber + "\", \"notes\":\"" + notes + "\"}";
 		Sys.command("osascript", ["-e", "tell application \"Jirassic\" to set tasks to \"" + comment +"\""]);
 	}
 }
