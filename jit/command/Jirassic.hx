@@ -24,7 +24,7 @@ class Jirassic {
 	
 	public function logIssue (branchName: String, comments: Array<String>) {
 		var notes = comments.join(" ");
-		var json = "{'taskType':'0', 'taskNumber':'', 'branchName':'" + branchName + "', 'notes':'" + notes + "'}";
+		var json = "{'taskType':'0', 'taskNumber':'null', 'branchName':'" + branchName + "', 'notes':'" + notes + "'}";
 		Sys.command("osascript", ["-e", "tell application \"Jirassic\" to set tasks to \"" + json +"\""]);
 	}
 }
