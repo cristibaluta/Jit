@@ -12,3 +12,4 @@
 -main jit.Jit
 -resource usage.txt@usage
 -cmd mv cpp/Jit build/jit
+-cmd sudo build/jit install

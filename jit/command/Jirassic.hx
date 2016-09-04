@@ -16,15 +16,15 @@ class Jirassic {
 	}
 
 	// osascript -e "tell application \"Jirassic\" to set tasks to \"abcdefghij\""
-	public function logCommit (taskNumber: String, comments: Array<String>) {
+	public function logCommit (taskNumber: String, branchName: String, comments: Array<String>) {
 		var notes = comments.join(" ");
-		var json = "{'taskType':'5', 'taskNumber':'" + taskNumber + "', 'notes':'" + notes + "'}";
+		var json = "{'taskType':'5', 'taskNumber':'" + taskNumber + "', 'branchName':'" + branchName + "', 'notes':'" + notes + "'}";
 		Sys.command("osascript", ["-e", "tell application \"Jirassic\" to set tasks to \"" + json +"\""]);
 	}
 	
-	public function logIssue (comments: Array<String>) {
+	public function logIssue (branchName: String, comments: Array<String>) {
 		var notes = comments.join(" ");
-		var json = "{'taskType':'0', 'taskNumber':'', 'notes':'" + notes + "'}";
+		var json = "{'taskType':'0', 'taskNumber':'', 'branchName':'" + branchName + "', 'notes':'" + notes + "'}";
 		Sys.command("osascript", ["-e", "tell application \"Jirassic\" to set tasks to \"" + json +"\""]);
 	}
 }
