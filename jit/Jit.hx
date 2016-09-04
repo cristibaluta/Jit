@@ -99,12 +99,13 @@ class Jit {
 					
 					if (firstArg == "-log" || firstArg == "-l" || command == "magic") {
 						var jirassic = new Jirassic();
-						jirassic.logCommit(issueId, args);
+						jirassic.logCommit(issueId, git.currentBranchName(), args);
 					}
 					
 				case "log","jirassic":
+					var git = new Git();
 					var jirassic = new Jirassic();
-					jirassic.logCommit("", args);
+					jirassic.logCommit("", git.currentBranchName(), args);
 					
 				case "setup":
 					var setup = new Setup();
