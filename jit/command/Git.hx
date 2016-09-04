@@ -28,13 +28,26 @@ class Git {
 		Sys.command("git", ["push"]);
 	}
 	
-	public function searchInLocalBranches (issueId: String) : String {
-		for (branch in getLocalBranches()) {
-			if (branch.toLowerCase().indexOf(issueId.toLowerCase()) != -1) {
-				return branch;
+	public function searchInLocalBranches (searchTerm: String) : String {
+		var branches = getLocalBranches();
+		var matches = branches.filter( function(branchName: String) { return branchName.toLowerCase().indexOf(searchTerm.toLowerCase()) != -1; });
+		if (matches.length == 1) {
+			return matches[0];
+		}
+		var bestMatch: String = null;
+		var bestIndex: Int = 10000;
+		for (match in matches) {
+			if (match.toLowerCase() == searchTerm.toLowerCase()) {
+				return match;
+			} else {
+				var index = match.toLowerCase().indexOf( searchTerm.toLowerCase() );
+				if (index < bestIndex) {
+					bestMatch = match;
+					bestIndex = index;
+				}
 			}
 		}
-		return null;
+		return bestMatch;
 	}
 	
 	public function currentBranchName() : String {
