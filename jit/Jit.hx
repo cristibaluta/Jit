@@ -47,11 +47,13 @@ class Jit {
 								var git = new Git();
 									git.createBranchNamed( branchName );
 								Sys.println( "New branch created: \033[1m" + branchName + "\033[0m" );
+								Sys.println("Don't forget to run \033[1mjit co\033[0m to checkout this branch");
 							} else {
 								Sys.println( "Server error" );
 							}
 						});
 					}
+					Sys.println("\n");
 					
 				case "checkout","co":
 					var issueKey = new JiraIssueKeyValidator().validateIssueKey(args[0]);
@@ -59,9 +61,12 @@ class Jit {
 					var gitBranchName = git.searchInLocalBranches( issueKey );
 					if (gitBranchName != null) {
 						git.checkoutBranchNamed( gitBranchName );
+						var config = new Config();
+						config.addToHistory(gitBranchName);
 					} else {
 						Sys.println( "Can't find a local branch containing: " + args[0] );
 					}
+					Sys.println("\n");
 					
 				case "pull":
 					var git = new Git();
@@ -73,6 +78,7 @@ class Jit {
 						}
 					}
 					git.pull();
+					Sys.println("\n");
 					
 				case "commit","ci","magic":
 					// Ask if commit to develop is ok
@@ -101,6 +107,7 @@ class Jit {
 						var jirassic = new Jirassic();
 						jirassic.logCommit(issueId, git.currentBranchName(), args);
 					}
+					Sys.println("\n");
 					
 				case "log","jirassic":
 					var git = new Git();
