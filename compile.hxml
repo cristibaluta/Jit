@@ -11,5 +11,6 @@
 -cpp cpp
 -main jit.Jit
 -resource usage.txt@usage
+-cmd cp cpp/Jit ../Jirassic/Jirassic
 -cmd mv cpp/Jit build/jit
--cmd sudo build/jit install
+# -cmd sudo build/jit install
