@@ -5,6 +5,8 @@ Usage:
   jit <issue id>                 Returns the issue details from server. (Ex: A-54, A54, a54)
   jit open <issue id>            Opens the issue in browser
   jit branch <issue id>          Create a branch with the name of the issue after is formatted properly
+  jit history                    Lists the last 3 branches you've checkouted
+  jit history <index>            Does a checkout of the branch at specified index in history. Indexes start with 1
   jit current                    Display the current git branch
   jit checkout | co <branch>     Switch the branch to the first local branch containing the keyword
   jit commit | ci [-log | -l] <Commit message>     Commit staged files. -log will log to Jirassic the commit details
