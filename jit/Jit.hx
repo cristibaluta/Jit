@@ -53,7 +53,7 @@ class Jit {
 							}
 						});
 					}
-					Sys.println("\n");
+					Sys.println("");
 					
 				case "checkout","co":
 					var issueKey = new JiraIssueKeyValidator().validateIssueKey(args[0]);
@@ -66,7 +66,7 @@ class Jit {
 					} else {
 						Sys.println( "Can't find a local branch containing: " + args[0] );
 					}
-					Sys.println("\n");
+					Sys.println("");
 					
 				case "pull":
 					var git = new Git();
@@ -78,7 +78,7 @@ class Jit {
 						}
 					}
 					git.pull();
-					Sys.println("\n");
+					Sys.println("");
 					
 				case "commit","ci","magic":
 					// Ask if commit to develop is ok
@@ -107,7 +107,22 @@ class Jit {
 						var jirassic = new Jirassic();
 						jirassic.logCommit(issueId, git.currentBranchName(), args);
 					}
-					Sys.println("\n");
+					Sys.println("");
+					
+				case "history":
+					var config = new Config();
+					var history = config.getHistory();
+					if (history.length > 0) {
+						Sys.println("Latest branches accessed:\n");
+						var i = 1;
+						for (h in history) {
+							Sys.println(" " + toBold(i + ".") + " " + h);
+							i++;
+						}
+					} else {
+						Sys.println("No branches in history.");
+					}
+					Sys.println("");
 					
 				case "log","jirassic":
 					var git = new Git();
@@ -149,5 +164,9 @@ class Jit {
 		} else {
 			Sys.println( "You are not connected to Jira yet\n" );
 		}
+	}
+	
+	static function toBold (str: String): String {
+		return "\033[1m" + str + "\033[0m";
 	}
 }
