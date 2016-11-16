@@ -17,6 +17,7 @@ class Config {
 	private var kBranchWordsSeparatorKey = "branch_words_separator";
 	private var kHistoryKey = "history";
 	private var kHistorySeparator = ";";
+	private var kHistoryMaxItems = 3;
 	private var values = new Map<String, String>();
 	
 	public function new() {
@@ -86,6 +87,7 @@ class Config {
 	public function addToHistory (branchName: String) {
 		var history = getHistory();
 		history.insert(0, branchName);
+		history = history.slice(0, kHistoryMaxItems);
 		values.set(kHistoryKey, history.join(kHistorySeparator));
 		save();
 	}
