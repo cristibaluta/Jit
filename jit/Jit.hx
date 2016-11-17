@@ -37,7 +37,7 @@ class Jit {
 				case "current":
 					var git = new Git();
 					var branchName = git.currentBranchName();
-					Sys.println( "Current branch: \033[1m" + branchName + "\033[0m" );
+					Sys.println( "Current branch: " + toBold(branchName) );
 					
 				case "branch":
 					if (hasConfig()) {
@@ -46,7 +46,7 @@ class Jit {
 							if (branchName != null) {
 								var git = new Git();
 									git.createBranchNamed( branchName );
-								Sys.println( "New branch created: \033[1m" + branchName + "\033[0m" );
+								Sys.println( "New branch created: " + toBold(branchName) );
 								Sys.println("Don't forget to run \033[1mjit co\033[0m to checkout this branch");
 							} else {
 								Sys.println( "Server error" );
@@ -113,11 +113,24 @@ class Jit {
 					var config = new Config();
 					var history = config.getHistory();
 					if (history.length > 0) {
-						Sys.println("Latest branches accessed:\n");
-						var i = 1;
-						for (h in history) {
-							Sys.println(" " + toBold(i + ".") + " " + h);
-							i++;
+						if (args[0] != null) {
+							// Checkout branch at specified index
+							var index = args[0] == "first" ? 1 : Std.parseInt(args[0]);
+							if (index < 1) {
+								index = 1;
+							} else if (index > history.length) {
+								index = history.length;
+							}
+							var gitBranchName = history[index-1];
+							var git = new Git();
+							git.checkoutBranchNamed( gitBranchName );
+						} else {
+							Sys.println("Latest branches accessed:\n");
+							var i = 1;
+							for (h in history) {
+								Sys.println(" " + toBold(i + ".") + " " + h);
+								i++;
+							}
 						}
 					} else {
 						Sys.println("No branches in history.");
