@@ -17,7 +17,7 @@ class Config {
 	private var kBranchWordsSeparatorKey = "branch_words_separator";
 	private var kHistoryKey = "history";
 	private var kHistorySeparator = ";";
-	private var kHistoryMaxItems = 3;
+	private var kHistoryMaxItems = 5;
 	private var values = new Map<String, String>();
 	
 	public function new() {
