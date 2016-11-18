@@ -56,16 +56,8 @@ class Jit {
 					Sys.println("");
 					
 				case "checkout","co":
-					var issueKey = new JiraIssueKeyValidator().validateIssueKey(args[0]);
-					var git = new Git();
-					var gitBranchName = git.searchInLocalBranches( issueKey );
-					if (gitBranchName != null) {
-						git.checkoutBranchNamed( gitBranchName );
-						var config = new Config();
-						config.addToHistory(gitBranchName);
-					} else {
-						Sys.println( "Can't find a local branch containing: " + args[0] );
-					}
+					var arg = args[0];
+					checkout(arg);
 					Sys.println("");
 					
 				case "pull":
@@ -115,15 +107,14 @@ class Jit {
 					if (history.length > 0) {
 						if (args[0] != null) {
 							// Checkout branch at specified index
-							var index = args[0] == "first" ? 1 : Std.parseInt(args[0]);
+							var index = args[0] == "prev" ? 2 : Std.parseInt(args[0]);
 							if (index < 1) {
 								index = 1;
 							} else if (index > history.length) {
 								index = history.length;
 							}
 							var gitBranchName = history[index-1];
-							var git = new Git();
-							git.checkoutBranchNamed( gitBranchName );
+							checkout( gitBranchName );
 						} else {
 							Sys.println("Latest branches accessed:\n");
 							var i = 1;
@@ -159,11 +150,32 @@ class Jit {
 			}
 		}
 	}
+	
+	static function checkout (arg: String) {
+		
+		if (arg == "prev") {
+			var config = new Config();
+			var history = config.getHistory();
+			if (history.length >= 2) {
+				arg = history[1];
+			}
+		}
+		var issueKey = new JiraIssueKeyValidator().validateIssueKey(arg);
+		var git = new Git();
+		var gitBranchName = git.searchInLocalBranches( issueKey );
+		if (gitBranchName != null) {
+			git.checkoutBranchNamed( gitBranchName );
+			var config = new Config();
+			config.addToHistory(gitBranchName);
+		} else {
+			Sys.println( "Can't find a local branch containing: " + arg );
+		}
+	}
 
 	static function hasConfig() : Bool {
 		var config = new Config();
 		if (!config.isValid()) {
-			Sys.println( "Jira credentials are missing, please run \033[1mjit setup\033[0m first" );
+			Sys.println( "Jira credentials are missing, please run " + toBold("jit setup") + " first" );
 			return false;
 		}
 		return true;
@@ -173,7 +185,7 @@ class Jit {
 		Sys.println( haxe.Resource.getString("usage") );
 		var config = new Config();
 		if (config.isValid()) {
-			Sys.println( "You are connected to \033[1m"+config.getJiraUrl()+"\033[0m with user \033[1m"+config.getJiraUser()+"\033[0m\n" );
+			Sys.println( "You are connected to " + toBold(config.getJiraUrl()) + " with user " + toBold(config.getJiraUser()) + "\n" );
 		} else {
 			Sys.println( "You are not connected to Jira yet\n" );
 		}
