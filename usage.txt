@@ -1,5 +1,5 @@
 
-Jit 16.11.11 - (c)2016 Imagin Soft
+Jit ::version:: - (c)::year:: Imagin Soft
 
 Usage:
   jit <issue id>                 Returns the issue details from server. (Ex: A-54, A54, a54)
