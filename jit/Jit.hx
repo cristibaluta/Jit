@@ -7,6 +7,8 @@ import cpp.link.StaticStd;
 import cpp.link.StaticRegexp;
 #end
 
+@:build(Versioning.make())
+
 class Jit {
 	
 	static public function main() {
@@ -141,6 +143,16 @@ class Jit {
 					var installer = new Installer();
 						installer.run();
 						
+				case "version":
+					var json = "{'version':'" + Jit.VERSION + "'}";
+					var config = new Config();
+					if (config.isValid()) {
+						var url = config.getJiraUrl();
+						var user = config.getJiraUser();
+						json = "{'version':'" + Jit.VERSION + "', 'url':'" + url + "', 'user':'" + user + "'}";
+					}
+					Sys.print(json);
+					
 				default:
 					// If first arg is no command means it's an <issue id>
 					if (hasConfig()) {
@@ -181,8 +193,11 @@ class Jit {
 		return true;
 	}
 
-	static public function printUsage() {
-		Sys.println( haxe.Resource.getString("usage") );
+	static function printUsage() {
+		var usageText = haxe.Resource.getString("usage");
+		usageText = StringTools.replace(usageText, "::version::", Jit.VERSION);
+		usageText = StringTools.replace(usageText, "::year::", Jit.VERSION_YEAR);
+		Sys.println( usageText );
 		var config = new Config();
 		if (config.isValid()) {
 			Sys.println( "You are connected to " + toBold(config.getJiraUrl()) + " with user " + toBold(config.getJiraUser()) + "\n" );
