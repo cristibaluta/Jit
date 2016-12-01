@@ -36,7 +36,7 @@ class Jit {
 						}
 					}
 					
-				case "current":
+				case "current","cu":
 					var git = new Git();
 					var branchName = git.currentBranchName();
 					Sys.println( "Current branch: " + toBold(branchName) );
@@ -103,7 +103,7 @@ class Jit {
 					}
 					Sys.println("");
 					
-				case "history":
+				case "history","hi":
 					var config = new Config();
 					var history = config.getHistory();
 					if (history.length > 0) {
