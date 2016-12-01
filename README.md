@@ -36,13 +36,18 @@ For a complete list of commands and details run
 
 ### Installing
 
-Work on Mac only at this point.
+Works on Mac only at this point.
 
  1. Download the executable from build directory then run
 
 	sudo ./jit install
+	
+ 2. Run this commands in console from anywhere
+      
+	sudo curl -o /usr/local/bin/jit https://raw.githubusercontent.com/ralcr/Jit/master/build/jit
+	chmod +x /usr/local/bin/jit
 
- 2. Download the sources and compile yourself. To compile you need the Haxe compiler (http://haxe.org) and the hxcpp haxelib. Note that the cpp folder is added to .gitignore, please create it in the root before compiling. After you compile you still need to do step 1 if you want to call the app from anywhere
+ 3. Download the sources and compile yourself. To compile you need the Haxe compiler (http://haxe.org) and the hxcpp haxelib. Note that the cpp folder is added to .gitignore, please create it in the root before compiling. After you compile you still need to do step 1 if you want to call the app from anywhere
  	
 	haxelib install hxcpp // Install the hxcpp dependency
 	haxe compile.hxml // Compile the application
