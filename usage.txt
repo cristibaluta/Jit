@@ -17,3 +17,4 @@ Usage:
   jit setup                      Setup the Jira credentials
   jit me                         Check the Jira credentials, display your user
   jit install                    Run this command with sudo to move the executable in one of the bin paths
+  jit selfinstall                Downloads and installs the latest version from git. Run with sudo

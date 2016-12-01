@@ -142,7 +142,11 @@ class Jit {
 				case "install":
 					var installer = new Installer();
 						installer.run();
-						
+					
+				case "selfinstall":
+					var installer = new SelfInstaller();
+						installer.run();
+					
 				case "version":
 					var json = "{'version':'" + Jit.VERSION + "'}";
 					var config = new Config();
