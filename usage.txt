@@ -3,16 +3,17 @@ Jit ::version:: - (c)::year:: Imagin Soft
 
 Usage:
   jit <issue id>                 Returns the issue details from server. (Ex: A-54, A54, a54)
-  jit open <issue id>            Opens the issue in browser
-  jit branch <issue id>          Create a branch with the name of the issue after is formatted properly
-  jit history                    Lists the last 3 branches you've checkouted
-  jit history <index>            Does a checkout of the branch at specified index in history. Indexes start with 1
-  jit current                    Display the current git branch
-  jit checkout | co <branch>     Switch the branch to the first local branch containing the keyword
-  jit commit | ci [-log | -l] <Commit message>     Commit staged files. -log will log to Jirassic the commit details
+  jit open <issue id>            Opens the issue in Safari
+  jit branch <issue id>          Create a branch with the name of the issue, after is formatted properly
+  jit [history | hi]             Lists the last 5 branches you've checkouted
+  jit [history | hi] <index>     Does a checkout of the branch at specified index in history
+  jit [current | cu]             Display the current branch
+  jit [checkout | co] <branch>   Switch the branch to the most relevant local branch containing the keyword
+  jit [commit | ci] [-log | -l] <Commit message>
+                                 Commit staged files. -log will log to Jirassic the commit details
   jit pull <branch>              Switches to the specified branch and then pull the changes from remote
   jit magic <Commit message>     Stage all changes, commit, push, and log the commit message to Jirassic
-  jit log | jirassic <Message>   Sends to Jirassic a message to be logged with the current timestamp
+  jit [log | jirassic] <Message> Sends to Jirassic a message to be logged with the current timestamp
   jit setup                      Setup the Jira credentials
   jit me                         Check the Jira credentials, display your user
   jit install                    Run this command with sudo to move the executable in one of the bin paths
