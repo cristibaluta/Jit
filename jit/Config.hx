@@ -26,10 +26,11 @@ class Config {
 			var fout = File.write(path, false);
 				fout.close();
 		}
-		parse( File.getContent( path));
+		values = Config.parse( File.getContent( path));
 	}
 	
-	private function parse (content: String) {
+	public static function parse (content: String) : Map<String, String> {
+		var values = new Map<String, String>();
 		var lines = content.split("\n");
 		for (line in lines) {
 			var comps = line.split("=");
@@ -41,6 +42,7 @@ class Config {
 			}
 			values.set(comps[0], comps[1]);
 		}
+		return values;
 	}
 
 	public function isValid() : Bool {

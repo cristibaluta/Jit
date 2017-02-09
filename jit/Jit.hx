@@ -137,7 +137,11 @@ class Jit {
 					
 				case "setup":
 					var setup = new Setup();
+					if (args[0] != null) {
+						setup.runWithJson(args[0]);
+					} else {
 						setup.run();
+					}
 					
 				case "install":
 					var installer = new Installer();
