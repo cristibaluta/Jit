@@ -66,7 +66,7 @@ class Jit {
 					var git = new Git();
 					if (args[0] != null) {
 						var issueKey = new JiraIssueKeyValidator().validateIssueKey(args[0]);
-						var gitBranchName = git.searchInLocalBranches( issueKey );
+						var gitBranchName = git.searchInLocalBranches( args[0], issueKey );
 						if (gitBranchName != null) {
 							git.checkoutBranchNamed( gitBranchName );
 						}
@@ -178,7 +178,7 @@ class Jit {
 		}
 		var issueKey = new JiraIssueKeyValidator().validateIssueKey(arg);
 		var git = new Git();
-		var gitBranchName = git.searchInLocalBranches( issueKey );
+		var gitBranchName = git.searchInLocalBranches( arg, issueKey );
 		if (gitBranchName != null) {
 			git.checkoutBranchNamed( gitBranchName );
 			var config = new Config();
