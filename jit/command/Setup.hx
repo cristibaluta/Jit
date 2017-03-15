@@ -8,6 +8,22 @@ class Setup {
 		config = new Config();
 	}
 	
+	public function runWithJson (content: String) {
+		var values = Config.parse( content );
+		var user = values.get("jira_user");
+		if (user != null) {
+			setJiraUser( user );
+		}
+		var url = values.get("jira_url");
+		if (url != null) {
+			setJiraUrl( url );
+		}
+		var password = values.get("jira_password");
+		if (password != null) {
+			setJiraPassword( password );
+		}
+	}
+	
 	public function run () {
 		
 		Sys.println( "Leave blank if you want to keep the previous value");
