@@ -28,9 +28,14 @@ class Git {
 		Sys.command("git", ["push"]);
 	}
 	
-	public function searchInLocalBranches (searchTerm: String) : String {
+	public function searchInLocalBranches (searchTerm: String, issueId: String) : String {
 		var branches = getLocalBranches();
-		var matches = branches.filter( function(branchName: String) { return branchName.toLowerCase().indexOf(searchTerm.toLowerCase()) != -1; });
+		var matches = branches.filter( function(branchName: String) {
+			var indexOfSearchTerm = branchName.toLowerCase().indexOf( searchTerm.toLowerCase() );
+			var indexOfIssueId = branchName.toLowerCase().indexOf( issueId.toLowerCase() );
+			return indexOfSearchTerm != -1 || indexOfIssueId != -1; 
+		});
+		// trace(matches);
 		if (matches.length == 1) {
 			return matches[0];
 		}
@@ -40,10 +45,16 @@ class Git {
 			if (match.toLowerCase() == searchTerm.toLowerCase()) {
 				return match;
 			} else {
-				var index = match.toLowerCase().indexOf( searchTerm.toLowerCase() );
-				if (index < bestIndex) {
+				// var index = match.toLowerCase().indexOf( searchTerm.toLowerCase() );
+				var indexOfSearchTerm = match.toLowerCase().indexOf( searchTerm.toLowerCase() );
+				var indexOfIssueId = match.toLowerCase().indexOf( issueId.toLowerCase() );
+				if (indexOfSearchTerm < bestIndex) {
 					bestMatch = match;
-					bestIndex = index;
+					bestIndex = indexOfSearchTerm;
+				}
+				if (indexOfIssueId < bestIndex) {
+					bestMatch = match;
+					bestIndex = indexOfIssueId;
 				}
 			}
 		}
@@ -51,7 +62,7 @@ class Git {
 	}
 	
 	public function currentBranchName() : String {
-		var current = searchInLocalBranches("*");
+		var current = searchInLocalBranches("*", "*");
 		current = StringTools.trim(current.split("*")[1]);
 		return current;
 	}
