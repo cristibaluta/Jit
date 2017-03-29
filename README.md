@@ -2,7 +2,7 @@
 Jira and Git brought together, create and switch branches by knowing only the task id.
 Jit connects to Jira to find the task title then formats it properly as a valid branch name.
 
-![Screenshot](http://s18.postimg.org/vv7c6n8cp/jit.png)
+![Screenshot](https://s16.postimg.org/ycfdy3jhx/Screen_Shot_2017-03-29_at_21.40.26.png)
 
 ### Commands
 Only the most basic commands are implemented that deals with branch names.
