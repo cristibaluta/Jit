@@ -2,7 +2,7 @@
 Jira and Git brought together, create and switch branches by knowing only the task id.
 Jit connects to Jira to find the task title then formats it properly as a valid branch name.
 
-![Screenshot](https://s13.postimg.org/k0ofvm607/Screen_Shot_2017-03-29_at_22.09.37.png)
+![Screenshot](https://s29.postimg.org/k30u3u3x3/jit.png)
 
 ## Commands
 Given a jira task with this details:
@@ -57,7 +57,7 @@ To compile you need the Haxe compiler (http://haxe.org) and the hxcpp haxelib. Y
 	sudo ./jit install // Install the app to usr/local/bin
 	jit // Check installation
 
-Win and linux versions in theory can work, in practice they must implement different logic for the password storage. Get in touch if you'd like to contribute with this.
+Win and linux versions in theory can work, in practice didn't tested. They also must implement different logic for the password storage. Get in touch if you'd like to contribute with this.
 
 ## Setup Jira
 To setup your jira credentials run and follow instructions
@@ -65,5 +65,5 @@ To setup your jira credentials run and follow instructions
     jit setup
 
 ## Changes
-####17.02.11
+###17.02.11
 - Fixed checkout local branches with simple words
