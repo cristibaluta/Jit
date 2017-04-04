@@ -55,8 +55,7 @@ class Jira {
 				var config = new Config();
 				var baseUrl = config.getJiraUrl();
 				var issueUrl = baseUrl + "/browse/" + response.key;
-				Sys.command("osascript", ["-e", "tell application \"Safari\" to activate"]);
-				Sys.command("osascript", ["-e", "tell application \"Safari\" to open location \"" + issueUrl + "\""]);
+				Sys.command("open", [issueUrl]);
 			}
 		});
 	}
