@@ -18,14 +18,20 @@ class Git {
 		Sys.command("git", ["pull"]);
 	}
 	
-	public function commit (comments: Array<String>) {
+	public function commit (comments: Array<String>) : String {
 		Sys.command("git", ["commit", "-m", comments.join(" ")]);
+		return "";
 	}
 	
-	public function commitAllAndPush (comments: Array<String>) {
+	public function commitAllAndPush (comments: Array<String>) : String {
 		Sys.command("git", ["add", "."]);
-		commit(comments);
+		commit( comments );
 		Sys.command("git", ["push"]);
+		return "";
+	}
+	
+	public function setUpstream (branchName: String) {
+		Sys.command("git", ["branch", "--set-upstream-to", "origin/" + branchName]);
 	}
 	
 	public function searchInLocalBranches (searchTerm: String, issueId: String) : String {
