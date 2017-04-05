@@ -65,7 +65,9 @@ To setup your jira credentials run and follow instructions
     jit setup
 
 ## Changes
+
 ###17.02.11
 - Fixed checkout local branches with simple words
+
 ###17.04.06
 - Check for updates once a day, so you don't miss the latest and greatest improvements
