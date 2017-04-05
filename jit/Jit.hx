@@ -49,7 +49,12 @@ class Jit {
 								var git = new Git();
 									git.createBranchNamed( branchName );
 								Sys.println( "New branch created: " + toBold(branchName) );
-								Sys.println("Don't forget to run \033[1mjit co\033[0m to checkout this branch");
+								
+								var question = new Question();
+								var response = question.ask( toBold( toRed("Do you want to also checkout this branch? ")) + toRed("y") + "/n");
+								if (response == true) {
+									checkout(branchName);
+								}
 							} else {
 								Sys.println( "Server error" );
 							}
@@ -79,12 +84,11 @@ class Jit {
 					var git = new Git();
 					var branchName = git.currentBranchName();
 					if (branchName == "develop" || branchName == "master") {
-						Sys.println( "\033[1m\033[31mAre you sure you want to commit on " + branchName + "?\033[0m y/\033[31mn\033[0m" );
-						do switch Sys.getChar(false) {
-							case 110: return;//n
-							case 121: break;//y
+						var question = new Question();
+						var response = question.ask( toBold( toRed("Are you sure you want to commit to " + branchName + "?")) + " y/" + toRed("n"));
+						if (response == false) {
+							return;
 						}
-						while (true);
 					}
 					
 					var firstArg = args[0];// First arg can be -log
@@ -93,9 +97,16 @@ class Jit {
 					}
 					var git = new Git();
 					var issueId = Branch.issueIdFromBranchName( git.currentBranchName() );
-					command == "magic"
-					? git.commitAllAndPush( issueId == null ? args : [issueId].concat(args))
-					: git.commit(args);
+					var response = (command == "magic")
+						? git.commitAllAndPush( issueId == null ? args : [issueId].concat(args))
+						: git.commit(args);
+					if (response.indexOf("upstream") > 0) {
+						var question = new Question();
+						var response = question.ask( toBold( toRed("Do you want to also set this branch to upstream? ")) + " y/" + toRed("n"));
+						if (response == true) {
+							git.setUpstream(branchName);
+						}
+					}
 					
 					if (firstArg == "-log" || firstArg == "-l" || command == "magic") {
 						var jirassic = new Jirassic();
@@ -216,5 +227,9 @@ class Jit {
 	
 	static function toBold (str: String): String {
 		return "\033[1m" + str + "\033[0m";
+	}
+	
+	static function toRed (str: String): String {
+		return "\033[31m" + str + "\033[0m";
 	}
 }
