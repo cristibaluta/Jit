@@ -180,6 +180,8 @@ class Jit {
 					}
 			}
 		}
+		
+		new CheckVersion().run();
 	}
 	
 	static function checkout (arg: String) {
