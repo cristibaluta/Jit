@@ -13,25 +13,26 @@ class CheckVersion {
 		var lastCheck = config.getLastVersionCheckDate();
 		var now = DateTools.format(Date.now(), "%y.%m.%d");
 		
-		if (lastCheck == now) {
+		if (lastCheck != now) {
 			config.setLastVersionCheckDate(now);
 			var remoteVersion = remoteVersion();
 			if (Jit.VERSION != remoteVersion) {
-				Sys.println( "---------------------------------------------");
+				Sys.println( "-----------------------------------------------");
 				Sys.println( "Jit "+toBold(remoteVersion)+" is available and you have "+toBold(Jit.VERSION)+", please run " + toBold(toRed("sudo jit selfinstall")) + " to update" );
+				Sys.println( "-----------------------------------------------");
 			}
 		}
 	}
 	
 	function remoteVersion() : String {
 		
-		// curl -s -X GET "https://raw.githubusercontent.com/ralcr/Jit/master/build/version.txt"
+		// curl -s -H 'Cache-Control: no-cache' -X GET "https://raw.githubusercontent.com/ralcr/Jit/master/build/version.txt"
 		
-		var process = new sys.io.Process("curl", ["-s", "-X", "GET", "https://raw.githubusercontent.com/ralcr/Jit/master/build/version.txt"]);
+		var process = new sys.io.Process("curl", ["-s", "-H", "Cache-Control: no-cache", "-X", "GET", "https://raw.githubusercontent.com/ralcr/Jit/master/build/version.txt"]);
 		
 		process.exitCode();
 		var result = process.stdout.readAll().toString();
-		trace(result);
+		
 		return result;
 	}
 	
