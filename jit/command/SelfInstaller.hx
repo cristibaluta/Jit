@@ -10,6 +10,6 @@ class SelfInstaller extends Installer {
 		Sys.command("chmod", ["+x", installationPath]);
 		
 		Sys.println( "Installed to: \033[1m"+installationPath+"\033[0m" );
-		Sys.println( "Great, you now have the latest and greatest version" );
+		Sys.println( "Great, you now have the latest and greatest Jit version" );
 	}
 }

@@ -15,6 +15,7 @@ class Config {
 	private var kJiraUrlKey = "jira_url";
 	private var kJiraUserKey = "jira_user";
 	private var kBranchWordsSeparatorKey = "branch_words_separator";
+	private var kLastVersionCheckDateKey = "last_version_check_date";
 	private var kHistoryKey = "history";
 	private var kHistorySeparator = ";";
 	private var kHistoryMaxItems = 5;
@@ -102,6 +103,14 @@ class Config {
 	public function setJiraPassword (pass: String) {
 		var keychain = new Keychain();
 		keychain.setUserAndPassword (getJiraUser(), pass);
+	}
+	
+	public function getLastVersionCheckDate() : String {
+		return values.get(kLastVersionCheckDateKey);
+	}
+	public function setLastVersionCheckDate (date: String) {
+		values.set(kLastVersionCheckDateKey, date);
+		save();
 	}
 	
 	function save() {
