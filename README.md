@@ -35,27 +35,20 @@ For a complete list of commands and details run
 
 ## Installing on macOS
 
-Run this commands in Terminal
+Run this commands in Terminal to download the executable and to give it permissions
 
 	sudo curl -o /usr/local/bin/jit https://raw.githubusercontent.com/ralcr/Jit/master/build/jit
 	chmod +x /usr/local/bin/jit
 
-Or download the executable from the build directory then run
-
-	sudo ./jit install
-
 If you already have jit, you can update it to the latest version by running
 
-    sudo jit selfinstall
+    sudo jit selfupdate
 
 ## Compile from sources
 To compile you need the Haxe compiler (http://haxe.org) and the hxcpp haxelib. You must also create manually a 'cpp' folder where Haxe will compile the app.
  
 	haxelib install hxcpp // Install the hxcpp dependency
 	haxe compile.hxml // Compile the application
-	cd build
-	sudo ./jit install // Install the app to usr/local/bin
-	jit // Check installation
 
 Win and linux versions in theory can work, in practice didn't tested. They also must implement different logic for the password storage. Get in touch if you'd like to contribute with this.
 
