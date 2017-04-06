@@ -13,9 +13,9 @@ class Jira {
 
 	public function getFormattedIssueForGit (completion: String->Void) {
 		
-		var issueKey = new JiraIssueKeyValidator().validateIssueKey(args[0]);
-		var requestUser = new JiraRequest();
-		requestUser.getIssue (issueKey, function (response: Dynamic) {
+		var issueKey = new JiraIssueKeyValidator().validateIssueKey( args[0]);
+		var request = new JiraRequest();
+		request.getIssue (issueKey, function (response: Dynamic) {
 			if (response != null) {
 				completion (response.key + // config.getBranchSeparator() +
 							new Branch( config.getBranchSeparator() ).issueTitleToBranchName(response.fields.summary));
@@ -27,7 +27,7 @@ class Jira {
 	
 	public function displayIssueDetails() {
 		
-		var issueKey = new JiraIssueKeyValidator().validateIssueKey(args[0]);
+		var issueKey = new JiraIssueKeyValidator().validateIssueKey( args[0]);
 		var request = new JiraRequest();
 		request.getIssue (issueKey, function (response: Dynamic) {
 			if (response == null) {
@@ -36,7 +36,7 @@ class Jira {
 				Sys.println( "Issue id: \033[1m"+response.key+"\033[0m" );
 				Sys.println( "Issue title: \033[1m"+response.fields.summary+"\033[0m" );
 				Sys.println( "Branch name: \033[1m"+response.key + 
-							config.getBranchSeparator() + 
+							// config.getBranchSeparator() + 
 							new Branch( config.getBranchSeparator() ).issueTitleToBranchName(response.fields.summary) + 
 							"\033[0m" );
 			}
