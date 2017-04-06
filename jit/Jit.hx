@@ -141,11 +141,6 @@ class Jit {
 					}
 					Sys.println("");
 					
-				case "log","jirassic":
-					var git = new Git();
-					var jirassic = new Jirassic();
-					jirassic.logCommit("", git.currentBranchName(), args);
-					
 				case "setup":
 					var setup = new Setup();
 					if (args[0] != null) {
@@ -154,11 +149,7 @@ class Jit {
 						setup.run();
 					}
 					
-				case "install":
-					var installer = new Installer();
-						installer.run();
-					
-				case "selfinstall":
+				case "selfupdate":
 					var installer = new SelfInstaller();
 						installer.run();
 					
