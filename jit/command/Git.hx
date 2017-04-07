@@ -27,7 +27,7 @@ class Git {
 		Sys.command("git", ["add", "."]);
 		commit( comments );
 		var process = new sys.io.Process("git", ["push"]);
-			// process.exitCode(true);
+			process.exitCode(true);
 		var result = process.stdout.readAll().toString();
 		trace(result);
 		return result;
