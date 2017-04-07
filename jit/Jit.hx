@@ -97,15 +97,17 @@ class Jit {
 					}
 					var git = new Git();
 					var issueId = Branch.issueIdFromBranchName( git.currentBranchName() );
-					var response = (command == "magic")
-						? git.commitAllAndPush( issueId == null ? args : [issueId].concat(args))
-						: git.commit(args);
-					if (response.indexOf("upstream") > 0) {
-						var question = new Question();
-						var response = question.ask( toBold( toRed("Do you want to also set this branch to upstream? ")) + " y/" + toRed("n"));
-						if (response == true) {
-							git.setUpstream(branchName);
+					if (command == "magic") {
+						git.commitAllAndPush( issueId == null ? args : [issueId].concat(args));
+						if (!git.branchIsUpstream(branchName)) {
+							var question = new Question();
+							var response = question.ask( toBold( toRed("Do you want to also set this branch to upstream? ")) + " y/" + toRed("n"));
+							if (response == true) {
+								git.setUpstream(branchName);
+							}
 						}
+					} else {
+						git.commit(args);
 					}
 					
 					if (firstArg == "-log" || firstArg == "-l" || command == "magic") {
