@@ -37,9 +37,8 @@ class Git {
 	public function branchIsUpstream (branchName: String) : Bool {
 		var branches = getLocalBranches(true);
 		for (branch in branches) {
-			trace(branch);
-			if (branch.indexOf(" [origin/" + branchName + "]") > 0) {
-				return true;
+			if (branch.indexOf(branchName) > 0) {
+				return branch.indexOf(" [origin/" + branchName + "]") > 0;
 			}
 		}
 		return false;
