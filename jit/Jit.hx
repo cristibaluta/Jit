@@ -99,7 +99,7 @@ class Jit {
 					var issueId = Branch.issueIdFromBranchName( git.currentBranchName() );
 					if (command == "magic") {
 						git.commitAllAndPush( issueId == null ? args : [issueId].concat(args));
-						if (git.branchIsUpstream(branchName)) {
+						if (!git.branchIsUpstream(branchName)) {
 							var question = new Question();
 							var response = question.ask( toBold( toRed("Do you want to also set this branch to upstream? ")) + " y/" + toRed("n"));
 							if (response == true) {
