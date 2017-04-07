@@ -100,7 +100,7 @@ class Jit {
 					var response = (command == "magic")
 						? git.commitAllAndPush( issueId == null ? args : [issueId].concat(args))
 						: git.commit(args);
-					if (response.indexOf("upstream") > 0) {
+					if (response.indexOf("--set-upstream") > 0) {
 						var question = new Question();
 						var response = question.ask( toBold( toRed("Do you want to also set this branch to upstream? ")) + " y/" + toRed("n"));
 						if (response == true) {

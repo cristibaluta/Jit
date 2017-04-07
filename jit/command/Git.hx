@@ -26,12 +26,16 @@ class Git {
 	public function commitAllAndPush (comments: Array<String>) : String {
 		Sys.command("git", ["add", "."]);
 		commit( comments );
-		Sys.command("git", ["push"]);
-		return "";
+		var process = new sys.io.Process("git", ["push"]);
+			process.exitCode();
+		var result = process.stdout.readAll().toString();
+		return result;
 	}
 	
 	public function setUpstream (branchName: String) {
-		Sys.command("git", ["branch", "--set-upstream-to", "origin/" + branchName]);
+		// git push --set-upstream origin IOS-2256_T_C_App_Update_Increment_internal_T_C_version
+		Sys.command("git", ["push", "--set-upstream", "origin", branchName]);
+		// Sys.command("git", ["branch", "--set-upstream-to", "origin/" + branchName]);
 	}
 	
 	public function searchInLocalBranches (searchTerm: String, issueId: String) : String {
