@@ -17,9 +17,9 @@ class CheckVersion {
 			config.setLastVersionCheckDate(now);
 			var remoteVersion = remoteVersion();
 			if (Jit.VERSION != remoteVersion) {
-				Sys.println( "-----------------------------------------------");
-				Sys.println( "Jit "+toBold(remoteVersion)+" is available and you have "+toBold(Jit.VERSION)+", please run " + toBold(toRed("sudo jit selfinstall")) + " to update" );
-				Sys.println( "-----------------------------------------------");
+				Sys.println( "------------------------------------------------------------------------------------");
+				Sys.println( "Jit "+toBold(remoteVersion)+" is available and you have "+toBold(Jit.VERSION)+", please run " + toBold(toRed("sudo jit selfupdate")) + " to update" );
+				Sys.println( "------------------------------------------------------------------------------------");
 			}
 		}
 	}
