@@ -29,6 +29,7 @@ class Git {
 		var process = new sys.io.Process("git", ["push"]);
 			process.exitCode();
 		var result = process.stdout.readAll().toString();
+		trace(result);
 		return result;
 	}
 	
