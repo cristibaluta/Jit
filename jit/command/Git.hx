@@ -26,7 +26,7 @@ class Git {
 	public function commitAllAndPush (comments: Array<String>) : String {
 		Sys.command("git", ["add", "."]);
 		commit( comments );
-		var process = new sys.io.Process("git", ["push"]);
+		var process = new sys.io.Process("git", ["push"]); 
 			process.exitCode(true);
 		var result = process.stdout.readAll().toString();
 		trace(result);
