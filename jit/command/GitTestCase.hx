@@ -1,7 +1,7 @@
 package jit.command;
 
 class GitMock extends Git {
-	override function getLocalBranches() : Array<String> {
+	override function getLocalBranches(includesTracking: Bool = false) : Array<String> {
 		return ["IOS-5_first_abc", "IOS-5_abc", "* IOS-5_last_abc", "IOS-5_develop_abc", "develop", "release_MY18"];
 	}
 }
