@@ -25,13 +25,19 @@ class Git {
 	public function commitAllAndPush (comments: Array<String>) {
 		Sys.command("git", ["add", "."]);
 		commit( comments );
-		Sys.command("git", ["push"]);
+		// Sys.command("git", ["push"]);
+		var process = new sys.io.Process("git", ["push"]); 
+			process.exitCode(true);
+		var result = process.stdout.readAll().toString();
+		trace(result);
+		var err = process.stderr.readAll().toString();
+		trace(err);
 	}
 	
 	public function setUpstream (branchName: String) {
 		// git push --set-upstream origin IOS-2256_T_C_App_Update_Increment_internal_T_C_version
 		// Sys.command("git", ["push", "--set-upstream", "origin", branchName]);
-		Sys.command("git", ["branch", "--set-upstream-to", "origin/" + branchName]);
+		Sys.command("git", ["push", "--set-upstream", "origin", branchName]);
 	}
 	
 	public function branchIsUpstream (branchName: String) : Bool {
