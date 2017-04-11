@@ -25,13 +25,7 @@ class Git {
 	public function commitAllAndPush (comments: Array<String>) {
 		Sys.command("git", ["add", "."]);
 		commit( comments );
-		// Sys.command("git", ["push"]);
-		var process = new sys.io.Process("git", ["push"]); 
-			process.exitCode(true);
-		var result = process.stdout.readAll().toString();
-		trace(result);
-		var err = process.stderr.readAll().toString();
-		trace(err);
+		Sys.command("git", ["push"]);
 	}
 	
 	public function setUpstream (branchName: String) {
