@@ -18,16 +18,15 @@ To create a local branch named "AA-55_Blah_blah_blah" for this task you'd do:
 To switch branches you will type: 
 
 	jit checkout aa55 // Case insensitive and no need to put the dash, jit will separate the chars from numbers with a dash
-	or
 	jit checkout blah // Switches to the first branch containing "blah"
-	or
 	jit co aa55 // Checkout is too long? There's even the "co" shortcut
+	jit co 55 // Switches to the first branch containing "55"
 
 Commiting to repo:
 
-	jit commit <Some commit message> // As you can see, no need for "", jit knows that after commit word follows the message
-	jit ci <Some commit message> // The "ci" shortcut for commit
-	jit magic <Some commit message> // Add files to stage, commits, then pushes to server
+	jit commit <commit message> // No need to wrap the message in "", jit knows that after commit word follows the message
+	jit ci <commit message> // The "ci" shortcut for commit
+	jit magic <commit message> // Add files to stage, commits, pushes to server, logs time to Jirassic
 
 For a complete list of commands and details run
 
@@ -46,7 +45,7 @@ If you already have jit, you can update it to the latest version by running
 
 ## Compile from sources
 To compile you need the Haxe compiler (http://haxe.org) and the hxcpp haxelib. You must also create manually a 'cpp' folder where Haxe will compile the app.
- 
+
 	haxelib install hxcpp // Install the hxcpp dependency
 	haxe compile.hxml // Compile the application
 
@@ -57,10 +56,13 @@ To setup your jira credentials run and follow instructions
 
     jit setup
 
-## Changes
+## Changelogs
 
 ###17.02.11
 - Fixed checkout local branches with simple words
 
 ###17.04.06
 - Check for updates once a day, so you don't miss the latest and greatest improvements
+
+###17.04.11
+- After each push ask to set the branch to upstream if not already set
