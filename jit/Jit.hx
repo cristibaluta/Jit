@@ -143,6 +143,33 @@ class Jit {
 					}
 					Sys.println("");
 					
+				case "pull-request","pr":
+					var config = new Config();
+					var history = config.getHistory();
+					if (history.length > 0) {
+						if (args[0] != null) {
+							// Checkout branch at specified index
+							var index = args[0] == "prev" ? 2 : Std.parseInt(args[0]);
+							if (index < 1) {
+								index = 1;
+							} else if (index > history.length) {
+								index = history.length;
+							}
+							var gitBranchName = history[index-1];
+							checkout( gitBranchName );
+						} else {
+							Sys.println("Latest branches accessed:\n");
+							var i = 1;
+							for (h in history) {
+								Sys.println(" " + toBold(i + ".") + " " + h);
+								i++;
+							}
+						}
+					} else {
+						Sys.println("No branches in history.");
+					}
+					Sys.println("");
+					
 				case "setup":
 					var setup = new Setup();
 					if (args[0] != null) {
