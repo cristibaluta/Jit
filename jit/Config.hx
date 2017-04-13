@@ -118,9 +118,7 @@ class Config {
 		}
 		return reviewers;
 	}
-	public function addToReviewers (reviewer: String) {
-		var reviewers = getReviewers();
-		reviewers.insert(0, reviewer);
+	public function setReviewers (reviewers: Array<String>) {
 		values.set(kReviewersKey, reviewers.join(kSeparator));
 		save();
 	}
