@@ -26,21 +26,28 @@ class Setup {
 	
 	public function run () {
 		
-		Sys.println( "Leave blank if you want to keep the previous value");
+		Sys.println( "Leave blanks when you want to keep the previous value");
 		Sys.println( "Current url to Jira is: \033[1m"+config.getJiraUrl()+"\033[0m" );
 		
+		// Url
 		var jiraUrl = param("1) Full path to Jira web app (usually it contains \033[1mjira\033[0m at the beginning or at the end)");
 		if (jiraUrl != "") {
 			setJiraUrl( jiraUrl );
 		}
 		
+		// Bitbucket
+		var bitbucketUrl = param("2) Full path to Bitbucket (only the root, the project is read from branches)");
+		if (bitbucketUrl != "") {
+			setBitbucketUrl( bitbucketUrl );
+		}
+		
 		// Ask for username
-		var user = param("2) Jira username");
+		var user = param("3) Jira username");
 		if (user != "") {
 			setJiraUser( user );
 		}
 		
-		var pass = param("3) Jira password", true);
+		var pass = param("4) Jira password", true);
 		if (user == "") {
 			user = config.getJiraUser();
 		}
@@ -48,7 +55,14 @@ class Setup {
 			setJiraPassword( pass );
 		}
 		
-		var separator = param("\n4) Separator between branch words (- or _)");
+		// Bitbucket
+		var reviewers = param("5) Set reviewers (a list of usernames separated by comma)");
+		if (reviewers != "") {
+			setReviewers( reviewers );
+		}
+		
+		// Separator
+		var separator = param("\n5) Separator between branch words (- or _)");
 		if (user != "") {
 			if (separator != "-" && separator != "_") {
 				separator = "_";
@@ -63,12 +77,21 @@ class Setup {
 		config.setJiraUrl ( url );
 	}
 	
+	function setBitbucketUrl (url: String) {
+		config.setBitbucketUrl ( url );
+	}
+	
 	function setJiraUser (user: String) {
 		config.setJiraUser ( user );
 	}
 	
 	function setJiraPassword (pass: String) {
 		config.setJiraPassword ( pass );
+	}
+	
+	function setReviewers (reviewers: String) {
+		var arr = reviewers.split(",");
+		config.setReviewers ( arr );
 	}
 	
 	function setBranchSeparator (separator: String) {
