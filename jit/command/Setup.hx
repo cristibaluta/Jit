@@ -9,6 +9,7 @@ class Setup {
 	}
 	
 	public function runWithJson (content: String) {
+		
 		var values = Config.parse( content );
 		var user = values.get("jira_user");
 		if (user != null) {
@@ -25,29 +26,37 @@ class Setup {
 	}
 	
 	public function run () {
-		
+
+		Sys.println("");
+		Sys.println("You will be setting: 1) jira url, 2) username, 3) password, 4) branch separator");
 		Sys.println( "Leave blanks when you want to keep the previous value");
-		Sys.println( "Current url to Jira is: \033[1m"+config.getJiraUrl()+"\033[0m" );
+		Sys.println("");
 		
 		// Url
-		var jiraUrl = param("1) Full path to Jira web app (usually it contains \033[1mjira\033[0m at the beginning or at the end)");
+		var str = "1) Full path to Jira web app";
+		var currentUrl = config.getJiraUrl();
+		if (currentUrl != null) {
+			str = str + " (current: " + currentUrl + ")";
+		} else {
+			str = str + " (usually it contains \033[1mjira\033[0m at the beginning or at the end)";
+		}
+		var jiraUrl = new UserInput(str).getText();
 		if (jiraUrl != "") {
 			setJiraUrl( jiraUrl );
 		}
 		
-		// Bitbucket
-		var bitbucketUrl = param("2) Full path to Bitbucket (only the root, the project is read from branches)");
-		if (bitbucketUrl != "") {
-			setBitbucketUrl( bitbucketUrl );
-		}
-		
 		// Ask for username
-		var user = param("3) Jira username");
+		str = "2) Jira username";
+		var currentUser = config.getJiraUser();
+		if (currentUser != null) {
+			str = str + " (current: " + currentUser + ")";
+		}
+		var user = new UserInput(str).getText();
 		if (user != "") {
 			setJiraUser( user );
 		}
 		
-		var pass = param("4) Jira password", true);
+		var pass = new UserInput("3) Jira password").getPassword();
 		if (user == "") {
 			user = config.getJiraUser();
 		}
@@ -55,30 +64,29 @@ class Setup {
 			setJiraPassword( pass );
 		}
 		
-		// Bitbucket
-		var reviewers = param("5) Set reviewers (a list of usernames separated by comma)");
-		if (reviewers != "") {
-			setReviewers( reviewers );
-		}
-		
 		// Separator
-		var separator = param("\n5) Separator between branch words (- or _)");
+		str = "\n4) Separator between branch words";
+		var currentSeparator = config.getBranchSeparator();
+		if (currentSeparator != null) {
+			str = str + " (current: " + currentSeparator + ")";
+		} else {
+			str = str + " (- or _)";
+		}
+		var separator = new UserInput(str).getText();
 		if (user != "") {
 			if (separator != "-" && separator != "_") {
+				Sys.println( "Allowed separators are - or _. _ used" );
 				separator = "_";
 			}
 			setBranchSeparator ( separator );
 		}
 		
-		Sys.println( "\nGreat, we are done with Jira!\nCheck if the connection is working with \033[1mjit me\033[0m" );
+		Sys.println( "\nSetup complete!\nCheck if the Jira connection is working with \033[1mjit me\033[0m" );
+		Sys.println("");
 	}
 	
 	function setJiraUrl (url: String) {
 		config.setJiraUrl ( url );
-	}
-	
-	function setBitbucketUrl (url: String) {
-		config.setBitbucketUrl ( url );
 	}
 	
 	function setJiraUser (user: String) {
@@ -89,27 +97,7 @@ class Setup {
 		config.setJiraPassword ( pass );
 	}
 	
-	function setReviewers (reviewers: String) {
-		var arr = reviewers.split(",");
-		config.setReviewers ( arr );
-	}
-	
 	function setBranchSeparator (separator: String) {
 		config.setBranchSeparator ( separator );
-	}
-	
-	function param (name, ?passwd) {
-		Sys.print(name + " : ");
-		if (passwd) {
-			var s = new StringBuf();
-			do switch Sys.getChar(false) {
-				case 10, 13: break;
-				case c: s.addChar(c);
-			}
-			while (true);
-			Sys.print("");
-			return s.toString();
-		}
-		return Sys.stdin().readLine();
 	}
 }
