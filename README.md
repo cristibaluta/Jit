@@ -66,3 +66,6 @@ To setup your jira credentials run and follow instructions
 
 ###17.04.11
 - After each push ask to set the branch to upstream if not already set
+
+###17.04.30
+- Added command to create pull requests on stash
