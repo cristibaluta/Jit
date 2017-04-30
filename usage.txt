@@ -13,6 +13,7 @@ Usage:
                                  Commit staged files. -log will log to Jirassic the commit details
   jit pull <branch>              Does a jit checkout then pull its changes from remote
   jit magic <Commit message>     Stage all changes + commit + push + log the commit message to Jirassic
+  jit [pull-request | pr]        Make a pull request of the current branch
   jit setup                      Setup Jira
   jit me                         Display your jira user details
   sudo jit selfupdate            Update to the latest jit version

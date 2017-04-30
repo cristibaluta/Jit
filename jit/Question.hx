@@ -2,14 +2,18 @@ package jit;
 
 class Question {
 	
-	public function new () {
-		
+	var question: String;
+	
+	public function new (question: String) {
+		this.question = question;
 	}
 	
 	// Respond to question with yes or no
 	
-	public function ask (question: String): Bool {
-		Sys.println( question );
+	public function getAnswer (): Bool {
+		
+		Sys.println( question + " " + Style.bold(Style.red("Y")) + "/N" );
+		
 		do switch Sys.getChar(false) {
 			case 110: return false;//n
 			case 121: return true;//y

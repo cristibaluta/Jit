@@ -17,7 +17,8 @@ class Config {
 	private var kBranchWordsSeparatorKey = "branch_words_separator";
 	private var kLastVersionCheckDateKey = "last_version_check_date";
 	private var kHistoryKey = "history";
-	private var kHistorySeparator = ";";
+	private var kReviewersKey = "reviewers";
+	private var kSeparator = ";";
 	private var kHistoryMaxItems = 5;
 	private var values = new Map<String, String>();
 	
@@ -50,6 +51,7 @@ class Config {
 		return getJiraUrl() != null && getJiraUser() != null;
 	}
 	
+	// Jira url
 	public function getJiraUrl() : String {
 		return values.get(kJiraUrlKey);
 	}
@@ -58,6 +60,7 @@ class Config {
 		save();
 	}
 	
+	// User
 	public function getJiraUser() : String {
 		return values.get(kJiraUserKey);
 	}
@@ -66,6 +69,7 @@ class Config {
 		save();
 	}
 	
+	// Separator
 	public function getBranchSeparator() : String {
 		var separator = values.get(kBranchWordsSeparatorKey);
 		if (separator == null) {
@@ -73,17 +77,17 @@ class Config {
 		}
 		return separator;
 	}
-	
 	public function setBranchSeparator (separator: String) {
 		values.set(kBranchWordsSeparatorKey, separator);
 		save();
 	}
 	
+	// History
 	public function getHistory() : Array<String> {
 		var history = [];
 		var historyString = values.get(kHistoryKey);
 		if (historyString != null) {
-			history = historyString.split(kHistorySeparator);
+			history = historyString.split(kSeparator);
 		}
 		return history;
 	}
@@ -91,20 +95,35 @@ class Config {
 		var history = getHistory();
 		history.insert(0, branchName);
 		history = history.slice(0, kHistoryMaxItems);
-		values.set(kHistoryKey, history.join(kHistorySeparator));
+		values.set(kHistoryKey, history.join(kSeparator));
 		save();
 	}
 	
+	// Reviewers
+	public function getReviewers() : Array<String> {
+		var reviewers = [];
+		var reviewersString = values.get(kReviewersKey);
+		if (reviewersString != null) {
+			reviewers = reviewersString.split(kSeparator);
+		}
+		return reviewers;
+	}
+	public function setReviewers (reviewers: Array<String>) {
+		values.set(kReviewersKey, reviewers.join(kSeparator));
+		save();
+	}
+	
+	// Password
 	public function getJiraPassword() : String {
 		var keychain = new Keychain();
 		return keychain.getPasswordForUser (getJiraUser());
 	}
-	
 	public function setJiraPassword (pass: String) {
 		var keychain = new Keychain();
 		keychain.setUserAndPassword (getJiraUser(), pass);
 	}
 	
+	// Version check
 	public function getLastVersionCheckDate() : String {
 		return values.get(kLastVersionCheckDateKey);
 	}
@@ -112,6 +131,7 @@ class Config {
 		values.set(kLastVersionCheckDateKey, date);
 		save();
 	}
+	
 	
 	function save() {
 		var content = [];

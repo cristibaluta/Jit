@@ -1,5 +1,6 @@
 package jit.command;
 import jit.validator.*;
+import jit.parser.Branch;
 
 class Jira {
 	
@@ -33,12 +34,11 @@ class Jira {
 			if (response == null) {
 				Sys.println( "Server error" );
 			} else {
-				Sys.println( "Issue id: \033[1m"+response.key+"\033[0m" );
-				Sys.println( "Issue title: \033[1m"+response.fields.summary+"\033[0m" );
-				Sys.println( "Branch name: \033[1m"+response.key + 
+				Sys.println( "Issue id: " + Style.bold(response.key) );
+				Sys.println( "Issue title: " + Style.bold(response.fields.summary) );
+				Sys.println( "Branch name: " + Style.bold(response.key + 
 							// config.getBranchSeparator() + 
-							new Branch( config.getBranchSeparator() ).issueTitleToBranchName(response.fields.summary) + 
-							"\033[0m" );
+					new Branch( config.getBranchSeparator() ).issueTitleToBranchName(response.fields.summary)));
 			}
 		});
 	}
@@ -65,10 +65,12 @@ class Jira {
 		var request = new JiraRequest();
 		request.getUserProfile (config.getJiraUser(), function (response: Dynamic) {
 			if (response == null) {
-				Sys.println( "Server error" );
+				Sys.println( "Error getting the user details, credentials might be wrong." );
 			} else {
+				Sys.println("Username : " + config.getJiraUser());
 				Sys.println("Name : " + response.displayName);
 				Sys.println("Email : " + response.emailAddress);
+				Sys.println("");
 			}
 		});
 	}
