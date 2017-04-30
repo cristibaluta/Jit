@@ -1,5 +1,6 @@
 package jit;
 import jit.validator.*;
+import jit.parser.*;
 import jit.command.*;
 
 #if cpp
@@ -39,7 +40,7 @@ class Jit {
 				case "current","cu":
 					var git = new Git();
 					var branchName = git.currentBranchName();
-					Sys.println( "Current branch: " + toBold(branchName) );
+					Sys.println( "Current branch: " + Style.bold(branchName) );
 					
 				case "branch":
 					if (hasConfig()) {
@@ -48,11 +49,10 @@ class Jit {
 							if (branchName != null) {
 								var git = new Git();
 									git.createBranchNamed( branchName );
-								Sys.println( "New branch created: " + toBold(branchName) );
+								Sys.println( "New branch created: " + Style.bold(branchName) );
 								
-								var question = new Question();
-								var response = question.ask( toBold( toRed("Do you want to also checkout this branch? ")) + toRed("y") + "/n");
-								if (response == true) {
+								var question = new Question( Style.bold( Style.red("Do you want to also checkout this branch? ")) );
+								if (question.getAnswer() == true) {
 									checkout(branchName);
 								}
 							} else {
@@ -84,9 +84,8 @@ class Jit {
 					var git = new Git();
 					var branchName = git.currentBranchName();
 					if (branchName == "develop" || branchName == "master") {
-						var question = new Question();
-						var response = question.ask( toBold( toRed("Are you sure you want to commit to " + branchName + "?")) + " y/" + toRed("n"));
-						if (response == false) {
+						var question = new Question( Style.bold( Style.red("Are you sure you want to commit to " + branchName + "?")) );
+						if (question.getAnswer() == false) {
 							return;
 						}
 					}
@@ -100,9 +99,8 @@ class Jit {
 					if (command == "magic") {
 						git.commitAllAndPush( issueId == null ? args : [issueId].concat(args));
 						if (!git.branchIsUpstream(branchName)) {
-							var question = new Question();
-							var response = question.ask( toBold( toRed("Do you want to also set this branch to upstream? ")) + " y/" + toRed("n"));
-							if (response == true) {
+							var question = new Question( Style.bold( Style.red("Do you want to also set this branch to upstream? ")) );
+							if (question.getAnswer() == true) {
 								git.setUpstream(branchName);
 							}
 						}
@@ -134,7 +132,7 @@ class Jit {
 							Sys.println("Latest branches accessed:\n");
 							var i = 1;
 							for (h in history) {
-								Sys.println(" " + toBold(i + ".") + " " + h);
+								Sys.println(" " + Style.bold(i + ".") + " " + h);
 								i++;
 							}
 						}
@@ -144,30 +142,8 @@ class Jit {
 					Sys.println("");
 					
 				case "pull-request","pr":
-					var config = new Config();
-					var history = config.getHistory();
-					if (history.length > 0) {
-						if (args[0] != null) {
-							// Checkout branch at specified index
-							var index = args[0] == "prev" ? 2 : Std.parseInt(args[0]);
-							if (index < 1) {
-								index = 1;
-							} else if (index > history.length) {
-								index = history.length;
-							}
-							var gitBranchName = history[index-1];
-							checkout( gitBranchName );
-						} else {
-							Sys.println("Latest branches accessed:\n");
-							var i = 1;
-							for (h in history) {
-								Sys.println(" " + toBold(i + ".") + " " + h);
-								i++;
-							}
-						}
-					} else {
-						Sys.println("No branches in history.");
-					}
+					var stash = new Stash([]);
+					stash.createPullRequest();
 					Sys.println("");
 					
 				case "setup":
@@ -228,7 +204,7 @@ class Jit {
 	static function hasConfig() : Bool {
 		var config = new Config();
 		if (!config.isValid()) {
-			Sys.println( "Jira credentials are missing, please run " + toBold("jit setup") + " first" );
+			Sys.println( "Jira credentials are missing, please run " + Style.bold("jit setup") + " first" );
 			return false;
 		}
 		return true;
@@ -241,17 +217,9 @@ class Jit {
 		Sys.println( usageText );
 		var config = new Config();
 		if (config.isValid()) {
-			Sys.println( "You are connected to " + toBold(config.getJiraUrl()) + " with user " + toBold(config.getJiraUser()) + "\n" );
+			Sys.println( "You are connected to " + Style.bold(config.getJiraUrl()) + " with user " + Style.bold(config.getJiraUser()) + "\n" );
 		} else {
 			Sys.println( "You are not connected to Jira yet\n" );
 		}
-	}
-	
-	static function toBold (str: String): String {
-		return "\033[1m" + str + "\033[0m";
-	}
-	
-	static function toRed (str: String): String {
-		return "\033[31m" + str + "\033[0m";
 	}
 }

@@ -13,7 +13,6 @@ Config file is of form:
 class Config {
 	
 	private var kJiraUrlKey = "jira_url";
-	private var kBitbucketUrlKey = "bitbucket_url";
 	private var kJiraUserKey = "jira_user";
 	private var kBranchWordsSeparatorKey = "branch_words_separator";
 	private var kLastVersionCheckDateKey = "last_version_check_date";
@@ -58,15 +57,6 @@ class Config {
 	}
 	public function setJiraUrl (url: String) {
 		values.set(kJiraUrlKey, url);
-		save();
-	}
-	
-	// Bitbucket url
-	public function getBitbucketUrl() : String {
-		return values.get(kBitbucketUrlKey);
-	}
-	public function setBitbucketUrl (url: String) {
-		values.set(kBitbucketUrlKey, url);
 		save();
 	}
 	

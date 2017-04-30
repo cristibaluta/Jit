@@ -18,7 +18,7 @@ class CheckVersion {
 			var remoteVersion = remoteVersion();
 			if (Jit.VERSION != remoteVersion) {
 				Sys.println( "------------------------------------------------------------------------------------");
-				Sys.println( "Jit "+toBold(remoteVersion)+" is available and you have "+toBold(Jit.VERSION)+", please run " + toBold(toRed("sudo jit selfupdate")) + " to update" );
+				Sys.println( "Jit " + Style.bold(remoteVersion) + " is available and you have " + Style.bold(Jit.VERSION) + ", please run " + Style.bold(Style.red("sudo jit selfupdate")) + " to update" );
 				Sys.println( "------------------------------------------------------------------------------------");
 			}
 		}
@@ -34,13 +34,5 @@ class CheckVersion {
 		var result = process.stdout.readAll().toString();
 		
 		return result;
-	}
-	
-	static function toBold (str: String): String {
-		return "\033[1m" + str + "\033[0m";
-	}
-	
-	static function toRed (str: String): String {
-		return "\033[31m" + str + "\033[0m";
 	}
 }

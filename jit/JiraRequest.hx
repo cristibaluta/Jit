@@ -60,24 +60,38 @@ class JiraRequest {
 		
 		process.exitCode();
 		var result = process.stdout.readAll().toString();
-		trace(result);
 		handleResponse (result, completion);
 	}
 	
+	public function pullRequest (stashUrl: String, detailsDict: Dynamic, completion: Dynamic->Void) {
+		
+		// curl -u cbaluta:Cr1st1_Tulc3a -H "Content-Type: application/json" -X POST -d '{"title": "branch name without underscores","description": "list of commits","state": "OPEN","open": true,"closed": false,"fromRef": {"id": "test25","repository": {"slug": "ios","name": null,"project": {"key": "BUI"}}},"toRef": {"id": "terms_and_conditions","repository": {"slug": "ios","name": null,"project": {"key": "BUI"}}},"locked": false,"reviewers": [{"user": {"name": "cbaluta"}}]}' "https://bitbucket.mobility-media.de/rest/api/1.0/projects/BUI/repos/ios/pull-requests"
+		
+		var json = haxe.Json.stringify(detailsDict);
+		
+		var process = new sys.io.Process("curl", ["-D-", "-X", "POST",
+		"-H", "Authorization: Basic " + encriptedCredentials(),
+		"-H", "Content-Type: application/json",
+		"-d", json, stashUrl]);
+		
+		process.exitCode();
+		var result = process.stdout.readAll().toString();
+		handleResponse (result, completion);
+	}
 	
-	function handleResponse (response: String, completion: Dynamic->Void): Void {
-		if (isValidResponse(response)) {
+	// Helpers
+	
+	function handleResponse (response: String, completion: Dynamic->Void) {
+		if (isValidResponse(response) || isValidPullRequest(response)) {
 			var json: Dynamic = null;
 			try {
-				json = jsonResponse(response);
+				json = extractJson(response);
 			} catch (e: Dynamic) {
 				trace("Error parsing json");
 				trace(response);
 			}
 			completion(json);
 		} else {
-			trace("The response doesn't contain 200 OK header");
-			trace(response);
 			completion(null);
 		}
 	}
@@ -86,7 +100,12 @@ class JiraRequest {
 		return response.indexOf("200 OK") != -1;
 	}
 	
-	function jsonResponse (response: String): Dynamic {
+	function isValidPullRequest (response: String): Bool {
+		return response.indexOf("201 Created") != -1;
+	}
+	
+	function extractJson (response: String): Dynamic {
+		// Json begins after an empty line and starts with {"
 		var components = response.split("\n{\"");
 		return haxe.Json.parse("{\"" + components.pop());
 	}

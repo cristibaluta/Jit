@@ -78,9 +78,10 @@ class Git {
 	}
 	
 	public function currentBranchName() : String {
-		var current = searchInLocalBranches("*", "*");
-		current = StringTools.trim(current.split("*")[1]);
-		return current;
+		var process = new sys.io.Process("git", ["symbolic-ref", "HEAD"]);
+			process.exitCode();
+		var result = process.stdout.readAll().toString();// refs/heads/branch_name
+		return StringTools.trim(result.substr(11));
 	}
 	
 	function getLocalBranches (includesTracking: Bool = false) : Array<String> {
@@ -98,5 +99,62 @@ class Git {
 			}
 		}
 		return branches;
+	}
+	
+	public function getParentBranch () : String {
+		// git show-branch | grep '*' | grep -v "$(git rev-parse --abbrev-ref HEAD)" | head -n1 | sed 's/.*\[\(.*\)\].*/\1/' | sed 's/[\^~].*//'
+		var args = ["-c", "git show-branch | grep '*' | grep -v \"$(git rev-parse --abbrev-ref HEAD)\" | head -n1 | sed 's/.*\\[\\(.*\\)\\].*/\\1/' | sed 's/[\\^~].*//'"];
+		
+		var process = new sys.io.Process("bash", args);
+			process.exitCode();
+		var result = process.stdout.readAll().toString();
+		
+		return StringTools.trim( result );
+	}
+	
+	public function getCommits(fromBranch: String, toBranch: String) : Array<String> {
+		// git log --no-color --reverse --format=%s parent_branch..current_ranch
+		var process = new sys.io.Process("git", ["log", "--no-color", "--reverse", "--format=%s", fromBranch + ".." + toBranch]);
+			process.exitCode();
+		var result = process.stdout.readAll().toString();
+		var commits = new Array<String>();
+		for (commit in result.split("\n")) {
+			if (commit.length > 0) {
+				commits.push( StringTools.trim( commit ) );
+			}
+		}
+		return commits;
+	}
+	
+	// urls order: fetch, push
+	function getRemotes() : Array<String> {
+		var process = new sys.io.Process("git", ["remote", "-v"]);
+			process.exitCode();
+		var result = process.stdout.readAll().toString();
+		var remotes = new Array<String>();
+		for (url in result.split("\n")) {
+			if (url.length > 0) {
+				remotes.push( StringTools.trim( url ) );
+			}
+		}
+		return remotes;
+	}
+	
+	public function getPushUrl() : String {
+		var remotes = getRemotes();
+		for (remote in remotes) {
+			if (StringTools.endsWith(remote, "(push)")) {
+				var intermediateUrl = StringTools.replace(remote, "(push)", "");
+				intermediateUrl = StringTools.rtrim(intermediateUrl);
+				var comps = intermediateUrl.split("\t");// split by tabs
+				if (comps.length == 1) {
+					comps = intermediateUrl.split(" ");// split by spaces
+				}
+				var url = comps.pop();
+				
+				return url;
+			}
+		}
+		return null;
 	}
 }
