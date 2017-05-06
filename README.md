@@ -28,6 +28,18 @@ Commiting to repo:
 	jit ci <commit message> // The "ci" shortcut for commit
 	jit magic <commit message> // Add files to stage, commits, pushes to server, logs time to Jirassic
 
+### jit magic
+This is a magical command that we recommend you use for every commit, it will:
+- Add the changed files to stage
+- Commit
+- Push
+- Log time to Jirassic
+
+
+Create pull requests in stash:
+
+	jit pr
+
 For a complete list of commands and details run
 
 	jit
@@ -69,3 +81,6 @@ To setup your jira credentials run and follow instructions
 
 ###17.04.30
 - Added command to create pull requests on stash
+
+###17.05.06
+- Added confirmation to proceed with the pull request and posibility to change parent branch if not detected correctly
