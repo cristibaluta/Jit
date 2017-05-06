@@ -30,15 +30,14 @@ class Stash {
 		
 		Sys.println("");
 		Sys.println(Style.red("Create a pull request"));
-		Sys.println( "Of branch: " + Style.bold(currentBranch));
-		Sys.println( "To branch: " + Style.bold(destinationBranch));
+		Sys.println( "Of current branch: " + Style.bold(currentBranch));
+		Sys.println( "To destination branch: " + Style.bold(destinationBranch));
 		
 		var pushUrlParser = new ParseRepoUrl(pushUrl);
 		var requestUrl = pushUrlParser.pullRequestApiUrl();
 		var projectKey = pushUrlParser.projectKey();
 		var slug = pushUrlParser.slug();
 		
-		var askForReviewers = true;
 		var reviewers = config.getReviewers();
 		if (reviewers.length > 0) {
 			Sys.println( "With reviewers: " + Style.bold(reviewers.join(",")));
@@ -46,14 +45,23 @@ class Stash {
 		Sys.println( "Url: " + Style.bold(pushUrlParser.pullRequestsUrl()));
 
 		Sys.println("");
-		var question = new Question( Style.bold("Everything looks ok?") );
-		askForReviewers = !question.getAnswer();
-		if (askForReviewers) {
-			var input = new UserInput("Enter reviewers usernames separated by comma").getText();
+		var question = new Question( Style.bold("Do you want to make any change?") );
+		if (question.getAnswer()) {
+			Sys.println( "Leave blank where you want to keep the existing value");
+			var input = new UserInput("Destination branch").getText();
+			if (input != "") {
+				destinationBranch = input;
+			}
+			input = new UserInput("Enter reviewers usernames separated by comma").getText();
 			if (input != "") {
 				config.setReviewers( input.split(",") );
 			}
 		}
+		var question = new Question( Style.bold("Confirm pull request?") );
+		if (!question.getAnswer()) {
+			return;
+		}
+		
 		var reviewers = [];
 		for (username in config.getReviewers()) {
 			reviewers.push( {"user": {"name": StringTools.trim(username)}} );
