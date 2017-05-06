@@ -142,9 +142,11 @@ class Jit {
 					Sys.println("");
 					
 				case "pull-request","pr":
-					var stash = new Stash([]);
-					stash.createPullRequest();
-					Sys.println("");
+					if (hasConfig()) {
+						var stash = new Stash([]);
+						stash.createPullRequest();
+						Sys.println("");
+					}
 					
 				case "setup":
 					var setup = new Setup();

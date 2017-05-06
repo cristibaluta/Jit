@@ -114,13 +114,14 @@ class Git {
 	
 	public function getCommits(fromBranch: String, toBranch: String) : Array<String> {
 		// git log --no-color --reverse --format=%s parent_branch..current_ranch
-		var process = new sys.io.Process("git", ["log", "--no-color", "--reverse", "--format=%s", fromBranch + ".." + toBranch]);
+		// git log --oneline current_branch ^parent_branch
+		var process = new sys.io.Process("git", ["log", "--no-color", "--oneline", fromBranch, "^" + toBranch]);
 			process.exitCode();
 		var result = process.stdout.readAll().toString();
 		var commits = new Array<String>();
 		for (commit in result.split("\n")) {
 			if (commit.length > 0) {
-				commits.push( StringTools.trim( commit ) );
+				commits.push( StringTools.trim( commit.substr(7) ) );// A commit message begins with the commit number, we need to remove it.
 			}
 		}
 		return commits;

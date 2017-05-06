@@ -18,6 +18,8 @@ class Stash {
 		var git = new Git();
 		var currentBranch = git.currentBranchName();
 		var destinationBranch = git.getParentBranch();
+		var commits = git.getCommits(currentBranch, destinationBranch);
+		var description = commits.join("\n");
 		
 		var pushUrl = git.getPushUrl();
 		var pushUrlValidator = new StashUrlValidator();
@@ -42,6 +44,9 @@ class Stash {
 		if (reviewers.length > 0) {
 			Sys.println( "With reviewers: " + Style.bold(reviewers.join(",")));
 		}
+		Sys.println( "Commits: ");
+		Sys.println( description );
+		Sys.println("");
 		Sys.println( "Url: " + Style.bold(pushUrlParser.pullRequestsUrl()));
 
 		Sys.println("");
@@ -69,7 +74,6 @@ class Stash {
 		
 		var branch = new Branch(config.getBranchSeparator());
 		var title = branch.branchNameToTitle(currentBranch);
-		var description = git.getCommits(destinationBranch, currentBranch).join("/n");
 		
 		var dict = {"title": title,
 					"description": description,
