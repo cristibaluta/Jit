@@ -49,7 +49,7 @@ For a complete list of commands and details run
 Run this commands in Terminal to download the executable and to give it permissions
 
 	sudo curl -o /usr/local/bin/jit https://raw.githubusercontent.com/ralcr/Jit/master/build/jit
-	chmod +x /usr/local/bin/jit
+	sudo chmod +x /usr/local/bin/jit
 
 If you already have jit, you can update it to the latest version by running
 
