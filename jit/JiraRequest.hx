@@ -65,7 +65,7 @@ class JiraRequest {
 	
 	public function pullRequest (stashUrl: String, detailsDict: Dynamic, completion: Dynamic->Void) {
 		
-		// curl -u cbaluta:Cr1st1_Tulc3a -H "Content-Type: application/json" -X POST -d '{"title": "branch name without underscores","description": "list of commits","state": "OPEN","open": true,"closed": false,"fromRef": {"id": "test25","repository": {"slug": "ios","name": null,"project": {"key": "BUI"}}},"toRef": {"id": "terms_and_conditions","repository": {"slug": "ios","name": null,"project": {"key": "BUI"}}},"locked": false,"reviewers": [{"user": {"name": "cbaluta"}}]}' "https://bitbucket.mobility-media.de/rest/api/1.0/projects/BUI/repos/ios/pull-requests"
+		// curl -u user:pass -H "Content-Type: application/json" -X POST -d '{"title": "branch name without underscores","description": "list of commits","state": "OPEN","open": true,"closed": false,"fromRef": {"id": "test25","repository": {"slug": "ios","name": null,"project": {"key": "BUI"}}},"toRef": {"id": "terms_and_conditions","repository": {"slug": "ios","name": null,"project": {"key": "BUI"}}},"locked": false,"reviewers": [{"user": {"name": "cbaluta"}}]}' "https://bitbucket.x.com/rest/api/1.0/projects/PROJ/repos/ios/pull-requests"
 		
 		var json = haxe.Json.stringify(detailsDict);
 		
