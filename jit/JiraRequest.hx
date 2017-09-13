@@ -21,14 +21,12 @@ class JiraRequest {
 		"\"Content-Type: application/json\"",
 		baseUrl + "rest/api/2/issue/" + key + "?fields=key,summary"]);*/
 		
-		var process = new sys.io.Process("curl", ["-D-", "-X", "GET",
+		var args = ["-D-", "-X", "GET",
 		"-H", "Authorization: Basic " + encriptedCredentials(),
 		"-H", "Content-Type: application/json",
-		baseUrl + "rest/api/2/issue/" + key + "?fields=key,summary"]);
+		baseUrl + "rest/api/2/issue/" + key + "?fields=key,summary"];
 		
-		process.exitCode();
-		var result = process.stdout.readAll().toString();
-		handleResponse (result, completion);
+		handleResponse (handleRequest(args), completion);
 	}
 	
 	public function getUserProfile (user: String, completion: Dynamic->Void) {
@@ -37,14 +35,12 @@ class JiraRequest {
 		
 		// curl -D- -u fred:fred -X GET -H "Content-Type: application/json" http://kelpie9:8081/rest/api/2/user?username=fred
 		
-		var process = new sys.io.Process("curl", ["-D-", "-X", "GET",
+		var args = ["-D-", "-X", "GET",
 		"-H", "Authorization: Basic " + encriptedCredentials(),
 		"-H", "Content-Type: application/json",
-		baseUrl + "rest/api/2/user?username=" + user]);
+		baseUrl + "rest/api/2/user?username=" + user];
 		
-		process.exitCode();
-		var result = process.stdout.readAll().toString();
-		handleResponse (result, completion);
+		handleResponse (handleRequest(args), completion);
 	}
 	
 	public function getUserTasks (user: String, completion: Dynamic->Void) {
@@ -53,14 +49,12 @@ class JiraRequest {
 		
 		// curl -D- -u fred:fred -X GET -H "Content-Type: application/json" http://kelpie9:8081/rest/api/2/search?jql=assignee=fred
 		
-		var process = new sys.io.Process("curl", ["-D-", "-X", "GET",
+		var args = ["-D-", "-X", "GET",
 		"-H", "Authorization: Basic " + encriptedCredentials(),
 		"-H", "Content-Type: application/json",
-		baseUrl + "rest/api/2/search?jql=assignee=" + user]);
+		baseUrl + "rest/api/2/search?jql=assignee=" + user];
 		
-		process.exitCode();
-		var result = process.stdout.readAll().toString();
-		handleResponse (result, completion);
+		handleResponse (handleRequest(args), completion);
 	}
 	
 	public function pullRequest (stashUrl: String, detailsDict: Dynamic, completion: Dynamic->Void) {
@@ -69,19 +63,33 @@ class JiraRequest {
 		
 		var json = haxe.Json.stringify(detailsDict);
 		
-		var process = new sys.io.Process("curl", ["-D-", "-X", "POST",
+		var args = ["-D-", "-X", "POST",
 		"-H", "Authorization: Basic " + encriptedCredentials(),
 		"-H", "Content-Type: application/json",
-		"-d", json, stashUrl]);
+		"-d", json, stashUrl];
 		
-		process.exitCode();
-		var result = process.stdout.readAll().toString();
-		handleResponse (result, completion);
+		handleResponse (handleRequest(args), completion);
 	}
 	
 	// Helpers
 	
+	function handleRequest (args: Array<String>): String {
+		
+		if (Jit.verbose) {
+			Sys.println("Making request with: " + args.join(" "));
+		}
+		var process = new sys.io.Process("curl", args);
+		process.exitCode();
+		
+		return process.stdout.readAll().toString();
+	}
+	
 	function handleResponse (response: String, completion: Dynamic->Void) {
+		
+		if (Jit.verbose) {
+			Sys.println("Response: " + response);
+		}
+		
 		if (isValidResponse(response) || isValidPullRequest(response)) {
 			var json: Dynamic = null;
 			try {

@@ -7,7 +7,7 @@ class Keychain implements KeychainInterface {
 	public function new() {
 		switch (Sys.systemName()) {
 			case "Mac": keychain = new OSXKeychain();
-			default: keychain = new OSXKeychain();
+			default: keychain = new WinKeychain();
 		}
 	}
 	

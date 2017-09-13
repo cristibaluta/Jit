@@ -12,9 +12,11 @@ import cpp.link.StaticRegexp;
 
 class Jit {
 	
+	static public var verbose = false;
 	static public function main() {
 		
 		var args = Sys.args();
+		verbose = args.remove("-v");
 		
 		if (args.length == 0) {
 			printUsage();
