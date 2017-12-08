@@ -3,8 +3,10 @@ package jit.security;
 class Keychain implements KeychainInterface {
 	
 	var keychain: KeychainInterface;
+	var project: String;
 	
-	public function new() {
+	public function new (project: String) {
+		self.project = project;
 		switch (Sys.systemName()) {
 			case "Mac": keychain = new OSXKeychain();
 			default: keychain = new OSXKeychain();
@@ -12,10 +14,10 @@ class Keychain implements KeychainInterface {
 	}
 	
 	public function setUserAndPassword (user: String, password: String) : Void {
-		keychain.setUserAndPassword(user, password);
+		keychain.setUserAndPassword(project + user, password);
 	}
 	
 	public function getPasswordForUser (user: String) : String {
-		return keychain.getPasswordForUser(user);
+		return keychain.getPasswordForUser(project + user);
 	}
 }
