@@ -9,7 +9,7 @@ class Keychain implements KeychainInterface {
 		self.project = project;
 		switch (Sys.systemName()) {
 			case "Mac": keychain = new OSXKeychain();
-			default: keychain = new OSXKeychain();
+			default: keychain = new WinKeychain();
 		}
 	}
 	
