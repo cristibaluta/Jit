@@ -6,7 +6,7 @@ class Keychain implements KeychainInterface {
 	var project: String;
 	
 	public function new (project: String) {
-		self.project = project;
+		this.project = project;
 		switch (Sys.systemName()) {
 			case "Mac": keychain = new OSXKeychain();
 			default: keychain = new WinKeychain();

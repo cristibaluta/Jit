@@ -6,20 +6,22 @@ class Jira {
 	
 	var args: Array<String>;
 	var config: Config;
-
+	
 	public function new (args: Array<String>) {
 		this.args = args;
 		this.config = new Config();
 	}
-
+	
 	public function getFormattedIssueForGit (completion: String->Void) {
 		
+		var separator = config.getBranchSeparator();
 		var issueKey = new JiraIssueKeyValidator().validateIssueKey( args[0]);
 		var request = new JiraRequest();
 		request.getIssue (issueKey, function (response: Dynamic) {
 			if (response != null) {
-				completion (response.key + // config.getBranchSeparator() +
-							new Branch( config.getBranchSeparator() ).issueTitleToBranchName(response.fields.summary));
+				var taskId = response.key;
+				var taskName = new Branch( separator ).issueTitleToBranchName(response.fields.summary);
+				completion (taskId + separator + taskName);
 			} else {
 				completion (null);
 			}
@@ -28,6 +30,7 @@ class Jira {
 	
 	public function displayIssueDetails() {
 		
+		var separator = config.getBranchSeparator();
 		var issueKey = new JiraIssueKeyValidator().validateIssueKey( args[0]);
 		var request = new JiraRequest();
 		request.getIssue (issueKey, function (response: Dynamic) {
@@ -36,9 +39,7 @@ class Jira {
 			} else {
 				Sys.println( "Issue id: " + Style.bold(response.key) );
 				Sys.println( "Issue title: " + Style.bold(response.fields.summary) );
-				Sys.println( "Branch name: " + Style.bold(response.key + 
-							// config.getBranchSeparator() + 
-					new Branch( config.getBranchSeparator() ).issueTitleToBranchName(response.fields.summary)));
+				Sys.println( "Branch name: " + Style.bold(response.key + separator + new Branch( separator ).issueTitleToBranchName(response.fields.summary)));
 			}
 		});
 	}
