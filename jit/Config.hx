@@ -12,6 +12,7 @@ Config file is of form:
 */
 class Config {
 	
+	private var kProjectKey = "project";
 	private var kJiraUrlKey = "jira_url";
 	private var kJiraUserKey = "jira_user";
 	private var kBranchWordsSeparatorKey = "branch_words_separator";
@@ -49,6 +50,15 @@ class Config {
 
 	public function isValid() : Bool {
 		return getJiraUrl() != null && getJiraUser() != null;
+	}
+	
+	// Jira url
+	public function getProject() : String {
+		return "";
+	}
+	public function setProject (projectName: String, path: String) {
+		// values.set(kJiraUrlKey, url);
+		save();
 	}
 	
 	// Jira url
@@ -115,11 +125,11 @@ class Config {
 	
 	// Password
 	public function getJiraPassword() : String {
-		var keychain = new Keychain();
+		var keychain = new Keychain("");
 		return keychain.getPasswordForUser (getJiraUser());
 	}
 	public function setJiraPassword (pass: String) {
-		var keychain = new Keychain();
+		var keychain = new Keychain("");
 		keychain.setUserAndPassword (getJiraUser(), pass);
 	}
 	

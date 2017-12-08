@@ -7,6 +7,7 @@ class BranchTestCase extends haxe.unit.TestCase {
 		assertEquals(new Branch("_").issueTitleToBranchName("AA-55  [abc][abc def]  Blah  blah"), "AA-55_Blah_blah");
 		assertEquals(new Branch("_").issueTitleToBranchName("AA-55  [abc][abc def] - Blah  blah"), "AA-55_Blah_blah");
 		assertEquals(new Branch("-").issueTitleToBranchName("AA-55 [abc][abc def] Blah blah"), "AA-55-Blah-blah");
+		assertEquals(new Branch("-").issueTitleToBranchName("AA-55 [abc] Blah blah"), "AA-55-Blah-blah");
 	}
 	
 	public function testCreateTitle() {
@@ -16,6 +17,7 @@ class BranchTestCase extends haxe.unit.TestCase {
 	
 	public function testExtractingIssueIdFromBranchName() {
 		assertEquals(Branch.issueIdFromBranchName("AA-55_Blah_blah"), "AA-55");
+		assertEquals(Branch.issueIdFromBranchName("AA-55-Blah-blah"), "AA-55");
 	}
 	
 	public function testNoIssueId() {
