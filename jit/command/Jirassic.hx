@@ -19,12 +19,12 @@ class Jirassic {
 	public function logCommit (taskNumber: String, branchName: String, comments: Array<String>) {
 		var notes = comments.join(" ");
 		var json = "{'taskType':'5', 'taskNumber':'" + taskNumber + "', 'branchName':'" + branchName + "', 'notes':'" + notes + "'}";
-		Sys.command("osascript", ["-e", "tell application \"Jirassic\" to set tasks to \"" + json +"\""]);
+		Sys.command("osascript", ["-e", "tell application \"Jirassic\" to create task \"" + json +"\""]);
 	}
 	
 	public function logIssue (branchName: String, comments: Array<String>) {
 		var notes = comments.join(" ");
 		var json = "{'taskType':'0', 'taskNumber':'null', 'branchName':'" + branchName + "', 'notes':'" + notes + "'}";
-		Sys.command("osascript", ["-e", "tell application \"Jirassic\" to set tasks to \"" + json +"\""]);
+		Sys.command("osascript", ["-e", "tell application \"Jirassic\" to create task \"" + json +"\""]);
 	}
 }
