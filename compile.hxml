@@ -11,6 +11,7 @@
 -cpp cpp
 -main jit.Jit
 -resource usage.txt@usage
--cmd cp cpp/Jit ../Jirassic/Delivery/macOS/jit
+#-cmd cp cpp/Jit ../Jirassic/Delivery/macOS/jit
+-cmd cp cpp/Jit /usr/local/bin
 -cmd mv cpp/Jit build/jit
 # -cmd sudo build/jit install

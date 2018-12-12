@@ -66,7 +66,23 @@ class Jit {
 					
 				case "checkout","co":
 					var arg = args[0];
-					checkout(arg);
+					var success = checkout(arg);
+					if (!success && hasConfig()) {
+						Sys.println( "Requesting branch name from Jira..." );
+						// The local branch was not found, get the name from Jira and try checkout again but from remote
+						var jira = new Jira([args[0]]);
+						jira.getFormattedIssueForGit( function (branchName: String) {
+							if (branchName != null) {
+								Sys.println( "Branch name should be " + Style.bold(branchName) );
+								var question = new Question( Style.bold( Style.red("Try checkout from remote? ")) );
+								if (question.getAnswer() == true) {
+									checkout(branchName);
+								}
+							} else {
+								Sys.println( "Server error, can't find the branch name on Jira" );
+							}
+						});
+					}
 					Sys.println("");
 					
 				case "pull":
@@ -184,7 +200,7 @@ class Jit {
 		new CheckVersion().run();
 	}
 	
-	static function checkout (arg: String) {
+	static function checkout (arg: String) : Bool {
 		
 		if (arg == "prev") {
 			var config = new Config();
@@ -200,8 +216,10 @@ class Jit {
 			git.checkoutBranchNamed( gitBranchName );
 			var config = new Config();
 			config.addToHistory(gitBranchName);
+			return true;
 		} else {
 			Sys.println( "Can't find a local branch containing: " + arg );
+			return false;
 		}
 	}
 

@@ -34,6 +34,7 @@ class Jira {
 		var issueKey = new JiraIssueKeyValidator().validateIssueKey( args[0]);
 		var request = new JiraRequest();
 		request.getIssue (issueKey, function (response: Dynamic) {
+			// trace(response);
 			if (response == null) {
 				Sys.println( "Server error" );
 			} else {
