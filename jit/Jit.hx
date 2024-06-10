@@ -19,7 +19,7 @@ class Jit {
 		verbose = args.remove("-v");
 		
 		if (args.length == 0) {
-			printUsage();
+			printHelp();
 		} else {
 			var command = args.shift();
 			switch (command) {
@@ -42,25 +42,19 @@ class Jit {
 				case "current","cu":
 					var git = new Git();
 					var branchName = git.currentBranchName();
-					Sys.println( "Current branch: " + Style.bold(branchName) );
+					Sys.println("Current branch: " + Style.bold(branchName));
 					
 				case "branch":
 					if (hasConfig()) {
 						var jira = new Jira([args[0]]);
-						jira.getFormattedIssueForGit( function (branchName: String) {
-							if (branchName != null) {
-								var git = new Git();
-									git.createBranchNamed( branchName );
-								Sys.println( "New branch created: " + Style.bold(branchName) );
-								
-								var question = new Question( Style.bold( Style.red("Do you want to also checkout this branch? ")) );
-								if (question.getAnswer() == true) {
-									checkout(branchName);
-								}
-							} else {
-								Sys.println( "Server error" );
-							}
-						});
+						jira.getFormattedIssueForGit(createBranch);
+					} else {
+						// If jira is not setup, create a branch name from the input arguments
+						var config = new Config();
+						var separator = config.getBranchSeparator();
+						var branch = new Branch(separator);
+						var branchName = branch.issueTitleToBranchName(args.join(" "));
+						createBranch(branchName);
 					}
 					Sys.println("");
 					
@@ -79,7 +73,7 @@ class Jit {
 									checkout(branchName);
 								}
 							} else {
-								Sys.println( "Server error, can't find the branch name on Jira" );
+								Sys.println("Server error, can't find the branch name on Jira");
 							}
 						});
 					}
@@ -91,7 +85,7 @@ class Jit {
 						var issueKey = new JiraIssueKeyValidator().validateIssueKey(args[0]);
 						var gitBranchName = git.searchInLocalBranches( args[0], issueKey );
 						if (gitBranchName != null) {
-							git.checkoutBranchNamed( gitBranchName );
+							git.checkoutBranchNamed(gitBranchName);
 						}
 					}
 					git.pull();
@@ -101,7 +95,7 @@ class Jit {
 					// Ask if commit to develop is ok
 					var git = new Git();
 					var branchName = git.currentBranchName();
-					if (branchName == "develop" || branchName == "master") {
+					if (branchName == "develop" || branchName == "master" || branchName == "main") {
 						var question = new Question( Style.bold( Style.red("Are you sure you want to commit to " + branchName + "?")) );
 						if (question.getAnswer() == false) {
 							return;
@@ -200,6 +194,24 @@ class Jit {
 		new CheckVersion().run();
 	}
 	
+	static function createBranch (branchName: String) {
+		if (branchName != null) {
+			var question = new Question( Style.bold( Style.red("Create branch named: " + branchName + "? ")) );
+			if (question.getAnswer() == true) {
+				var git = new Git();
+					git.createBranchNamed( branchName );
+				Sys.println( "New branch created: " + Style.bold(branchName) );
+
+				var question = new Question( Style.bold( Style.red("Checkout this branch? ")) );
+				if (question.getAnswer() == true) {
+					checkout(branchName);
+				}
+			}
+		} else {
+			Sys.println("Cannot create a branch name from this input");
+		}
+	}
+
 	static function checkout (arg: String) : Bool {
 		
 		if (arg == "prev") {
@@ -211,14 +223,14 @@ class Jit {
 		}
 		var issueKey = new JiraIssueKeyValidator().validateIssueKey(arg);
 		var git = new Git();
-		var gitBranchName = git.searchInLocalBranches( arg, issueKey );
+		var gitBranchName = git.searchInLocalBranches(arg, issueKey);
 		if (gitBranchName != null) {
 			git.checkoutBranchNamed( gitBranchName );
 			var config = new Config();
 			config.addToHistory(gitBranchName);
 			return true;
 		} else {
-			Sys.println( "Can't find a local branch containing: " + arg );
+			Sys.println("Can't find a local branch containing: " + arg);
 			return false;
 		}
 	}
@@ -226,22 +238,22 @@ class Jit {
 	static function hasConfig() : Bool {
 		var config = new Config();
 		if (!config.isValid()) {
-			Sys.println( "Jira credentials are missing, please run " + Style.bold("jit setup") + " first" );
+			Sys.println("Jira credentials are missing, please run " + Style.bold("jit setup") + " first");
 			return false;
 		}
 		return true;
 	}
 
-	static function printUsage() {
+	static function printHelp() {
 		var usageText = haxe.Resource.getString("usage");
 		usageText = StringTools.replace(usageText, "::version::", Jit.VERSION);
 		usageText = StringTools.replace(usageText, "::year::", Jit.VERSION_YEAR);
-		Sys.println( usageText );
+		Sys.println(usageText);
 		var config = new Config();
 		if (config.isValid()) {
-			Sys.println( "You are connected to " + Style.bold(config.getJiraUrl()) + " with user " + Style.bold(config.getJiraUser()) + "\n" );
+			Sys.println("You are connected to " + Style.bold(config.getJiraUrl()) + " with user " + Style.bold(config.getJiraUser()) + "\n");
 		} else {
-			Sys.println( "You are not connected to Jira yet\n" );
+			Sys.println("You are not connected to Jira yet\n");
 		}
 	}
 }

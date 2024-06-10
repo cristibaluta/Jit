@@ -2,18 +2,19 @@
 Jit ::version:: - (c)::year:: Imagin Soft
 
 Usage:
-  jit <issue id>                 Returns the issue details from server. (Ex: a54, A-54, A54)
-  jit open <issue id>            Opens the issue in the default browser
-  jit branch <issue id>          Creates a branch with a valid name for this issue
-  jit [history | hi]             Lists the last 5 branches you've checkouted with jit
-  jit [history | hi] <index>     Does a checkout of the branch at specified index in history
-  jit [current | cu]             Print the current branch
-  jit [checkout | co] <branch>   Switch to the most relevant local branch containing the provided keyword
+  jit <issue id>                  Returns the issue details from server. (Ex: a54, A-54, A54)
+  jit open <issue id>             Opens the issue in the default browser
+  jit branch [<issue id> | <task title>]
+                                  Creates a branch with a valid name for this issue id or the task title
+  jit [history | hi]              Lists the last 5 branches you've checkouted with jit
+  jit [history | hi] <index>      Does a checkout of the branch at specified index in history
+  jit [current | cu]              Print the active branch
+  jit [checkout | co] <branch>    Switch to the most relevant local branch containing the provided keyword
   jit [commit | ci] [-log | -l] <Commit message>
-                                 Commit staged files. -log will log to Jirassic the commit details
-  jit pull <branch>              Does a jit checkout then pull its changes from remote
-  jit magic <Commit message>     Stage all changes + commit + push + log the commit message to Jirassic
-  jit [pull-request | pr]        Make a pull request of the current branch
-  jit setup                      Setup Jira
-  jit me                         Display your jira user details
-  sudo jit selfupdate            Update to the latest jit version
+                                  Commit staged files. -log will log to Jirassic the commit details
+  jit pull <branch>               Does a jit checkout then pull its changes from remote
+  jit magic <Commit message>      Stage all changes + commit + push + log the commit message to Jirassic
+  jit [pull-request | pr]         Make a pull request of the current branch
+  jit setup                       Setup Jira
+  jit me                          Display your jira user details
+  sudo jit selfupdate             Update to the latest jit version

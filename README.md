@@ -2,8 +2,6 @@
 Jira and Git brought together, create and switch branches by knowing only the task id.
 Jit connects to Jira to find the task title then formats it properly as a valid branch name.
 
-![Screenshot](https://s29.postimg.org/k30u3u3x3/jit.png)
-
 ## Commands
 Given a jira task with this details:
   
@@ -11,9 +9,10 @@ Given a jira task with this details:
   
   task title: [AA] - Blah blah blah
 
-To create a local branch named "AA-55_Blah_blah_blah" for this task you'd do:
+To create a local branch named "AA-55_Blah_blah_blah" for this task you'd do one of the following:
 
-	jit branch aa55	
+	jit branch aa55 // Makes a request to jira server to aquire the title
+	jit branch "AA-55 \n[AA] - Blah blah blah" // Parses the input. It can ignore the new lines if the text is added in quotes
 
 To switch branches you will type: 
 
@@ -29,7 +28,7 @@ Commiting to repo:
 	jit magic <commit message> // Add files to stage, commits, pushes to server, logs time to Jirassic
 
 ### jit magic
-This is a magical command that we recommend you use for every commit, it will:
+This is a magical command that will:
 - Add the changed files to stage
 - Commit
 - Push
@@ -48,7 +47,7 @@ For a complete list of commands and details run
 
 Run this commands in Terminal to download the executable and to give it permissions
 
-	sudo curl -o /usr/local/bin/jit https://raw.githubusercontent.com/ralcr/Jit/master/build/jit
+	sudo curl -o /usr/local/bin/jit https://raw.githubusercontent.com/cristibaluta/Jit/master/build/jit
 	sudo chmod +x /usr/local/bin/jit
 
 If you already have jit, you can update it to the latest version by running
@@ -59,9 +58,10 @@ If you already have jit, you can update it to the latest version by running
 To compile you need the Haxe compiler (http://haxe.org) and the hxcpp haxelib. You must also create manually a 'cpp' folder where Haxe will compile the app.
 
 	haxelib install hxcpp // Install the hxcpp dependency
-	haxe compile.hxml // Compile the application
+	haxelib install hx3compat // Install lib with api from haxe3 that was removed in api4 (for unit testing)
+	haxe compile.hxml // Compile the application. Run with sudo if you are missing some writing permissions
 
-Win and linux versions in theory can work, in practice didn't tested. They also must implement different logic for the password storage. Get in touch if you'd like to contribute with this.
+Win and linux versions in theory should work, in practice didn't tested. They also must implement different logic for the password storage. Get in touch if you'd like to contribute with this.
 
 ## Setup Jira
 To setup your jira credentials run and follow instructions
@@ -69,6 +69,10 @@ To setup your jira credentials run and follow instructions
     jit setup
 
 ## Changelogs
+
+###24.06.10
+- Update to Haxe4
+- Create branches from task titles
 
 ###17.02.11
 - Fixed checkout local branches with simple words

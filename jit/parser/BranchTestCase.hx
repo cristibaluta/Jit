@@ -8,6 +8,7 @@ class BranchTestCase extends haxe.unit.TestCase {
 		assertEquals(new Branch("_").issueTitleToBranchName("AA-55  [abc][abc def] - Blah  blah"), "AA-55_Blah_blah");
 		assertEquals(new Branch("-").issueTitleToBranchName("AA-55 [abc][abc def] Blah blah"), "AA-55-Blah-blah");
 		assertEquals(new Branch("-").issueTitleToBranchName("AA-55 [abc] Blah blah"), "AA-55-Blah-blah");
+		assertEquals(new Branch("_").issueTitleToBranchName("AA-55 \n\n [abc] Blah blah"), "AA-55_Blah_blah");
 	}
 	
 	public function testCreateTitle() {

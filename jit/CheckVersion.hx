@@ -26,9 +26,9 @@ class CheckVersion {
 	
 	function remoteVersion() : String {
 		
-		// curl -s -H 'Cache-Control: no-cache' -X GET "https://raw.githubusercontent.com/ralcr/Jit/master/build/version.txt"
+		// curl -s -H 'Cache-Control: no-cache' -X GET "https://raw.githubusercontent.com/cristibaluta/Jit/master/build/version.txt"
 		
-		var process = new sys.io.Process("curl", ["-s", "-H", "Cache-Control: no-cache", "-X", "GET", "https://raw.githubusercontent.com/ralcr/Jit/master/build/version.txt"]);
+		var process = new sys.io.Process("curl", ["-s", "-H", "Cache-Control: no-cache", "-X", "GET", "https://raw.githubusercontent.com/cristibaluta/Jit/master/build/version.txt"]);
 		
 		process.exitCode();
 		var result = process.stdout.readAll().toString();

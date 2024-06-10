@@ -6,6 +6,7 @@
 -neko jit_tests.n
 -main JitTests
 -cmd neko jit_tests
+-L hx3compat
 
 --next
 -cpp cpp
